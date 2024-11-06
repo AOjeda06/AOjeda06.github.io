@@ -3,22 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receta de la Tortilla Francesa</title>
+    <title>actv 4.1</title>
     <style>
-        /* Estilos para las cabeceras */
-        h1 {
-            background-color: blue;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        h2 {
-            background-color: red;
-            color: white;
-            opacity: 0.9; /* Letra un poco transparente */
-            padding: 5px;
-        }
-        /* Estilos para los párrafos */
         p {
             font-family: Arial, sans-serif;
             font-size: 1.2em;
@@ -29,32 +15,33 @@
             color: green;
             font-size: 1.5em;
             font-style: italic;
+            font-family: fantasy;
         }
         p.different-style-2 {
             color: purple;
             font-size: 1.3em;
             font-style: oblique;
+            text-align: right;
         }
         p.different-style-3 {
             color: darkred;
             font-size: 1.1em;
             font-style: normal;
+            text-align: left;
+            text-decoration: line-through;
         }
-        /* Estilos para los divs */
         .flex-container {
             display: flex;
         }
-        .flex-container > div {
+        .flex {
             width: 400px;
             height: 200px;
-            margin: 10px;
             padding: 10px;
             border-radius: 15px;
         }
         .div1 { background-color: lightcoral; }
         .div2 { background-color: lightblue; }
         .div3 { background-color: lightgreen; }
-        /* Estilos para enlaces en el primer div */
         .div1 a {
             width: 100px;
             height: 50px;
@@ -63,10 +50,9 @@
             text-align: center;
             line-height: 50px;
         }
-        .div1 a:nth-child(1) { background-color: darkblue; }
-        .div1 a:nth-child(2) { background-color: darkgreen; }
-        .div1 a:nth-child(3) { background-color: darkred; }
-        /* Estilos para enlaces en el segundo div */
+        #div2a1 { background-color: darkblue; }
+        #div2a2 { background-color: darkgreen; }
+        #div2a3 { background-color: darkred; }
         .div2 a {
             width: 100px;
             height: 50px;
@@ -75,39 +61,38 @@
             text-align: center;
             line-height: 50px;
         }
-        .div2 a:nth-child(1) { background-color: darkblue; }
-        .div2 a:nth-child(2) { background-color: darkgreen; }
-        .div2 a:nth-child(3) { background-color: darkred; }
-        /* Estilos para enlaces en el tercer div */
+        #div1a1 { background-color: darkblue; }
+        #div1a2 { background-color: darkgreen; }
+        #div1a3 { background-color: darkred; }
         .div3 a {
             text-decoration: none;
         }
         .div3 a:hover {
             font-weight: bold;
-            color: blue;
+            color: black;
         }
     </style>
 </head>
 <body>
-    <!-- Actividad 1: Párrafos con diferentes estilos -->
     <p class="different-style-1">Este es un párrafo con estilo diferente 1.</p>
     <p class="different-style-2">Este es un párrafo con estilo diferente 2.</p>
     <p class="different-style-3">Este es un párrafo con estilo diferente 3.</p>
 
-    <!-- Actividad 2: Divs con enlaces -->
     <div class="flex-container">
-        <div class="div1">
-        	<h5>Motos</h5>
-            <a href="#">Enlace 1</a>
-            <a href="#">Enlace 2</a>
-            <a href="#">Enlace 3</a>
+        <div class="div1 flex">
+        	<p>MOTOS</p>
+            <a id="div1a1" href="#">Enlace 1</a>
+            <a id="div1a2" href="#">Enlace 2</a>
+            <a id="div1a3" href="#">Enlace 3</a>
         </div>
-        <div class="div2">
-            <a href="#">Enlace 1</a>
-            <a href="#">Enlace 2</a>
-            <a href="#">Enlace 3</a>
+        <div class="div2 flex">
+        	<p>COCHES</p>
+            <a id="div2a1" href="#">Enlace 1</a>
+            <a id="div2a2" href="#">Enlace 2</a>
+            <a id="div2a3" href="#">Enlace 3</a>
         </div>
-        <div class="div3">
+        <div class="div3 flex">
+        	<p>BARCOS</p>
             <a href="#">Enlace 1</a>
             <a href="#">Enlace 2</a>
             <a href="#">Enlace 3</a>
