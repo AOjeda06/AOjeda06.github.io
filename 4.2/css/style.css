@@ -3,7 +3,7 @@ div {
 			width: 200px;
 		}
 #big {
-	display: flex;
+	display: block;
 }
 #div1 {
 	background-image:url('img/aa.jpg');
