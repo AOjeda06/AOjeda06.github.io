@@ -5,18 +5,18 @@ div {
 #big {
 	display: flex;
 }
-#1 {
+#div1 {
 	background-image:url('img/aa.jpg');
 	background-position: center;
 }
 
-#2 {
+#div2 {
 	background-image: url('img/bb.jpg') ;
 	background-repeat: repeat-x;
 	background-position: bottom;
 }
 
-#3 {
+#div3 {
 	background-image: url('img/cc.jpg') ;
 	background-repeat: repeat-y;
 	background-position: right;
