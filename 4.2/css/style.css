@@ -2,3 +2,15 @@ div {
 			height: 200px;
 			width: 200px;
 		}
+
+#1 {
+	background-image:url('/img/aa.jpg');
+}
+
+#2 {
+	background-image: url('/img/bb.jpg') ;
+}
+
+#3 {
+	background-image: url('/img/cc.jpg') ;
+}
