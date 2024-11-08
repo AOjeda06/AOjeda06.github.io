@@ -6,20 +6,20 @@ div {
 	display: block;
 }
 #div1 {
-	background-image:url('img/aa.jpg');
+	background-image:url('../img/aa.jpg');
 	background-position: center;
 	border: 1px solid black;
 }
 
 #div2 {
-	background-image: url('img/bb.jpg') ;
+	background-image: url('../img/bb.jpg') ;
 	background-repeat: repeat-x;
 	background-position: bottom;
 	border: 5px solid black;
 }
 
 #div3 {
-	background-image: url('img/cc.jpg') ;
+	background-image: url('../img/cc.jpg') ;
 	background-repeat: repeat-y;
 	background-position: right;
 	border: 10px solid black;
