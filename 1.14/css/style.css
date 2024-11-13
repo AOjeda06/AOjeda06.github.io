@@ -9,3 +9,16 @@
     padding: 10px; /* Agregar espacio dentro de las celdas */
     border: 2px double black; /* Borde doble de 2px para celdas */
 }
+
+.tabla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    width: 50%;
+    margin: 0 auto;
+    border: 1px double black; /* Borde alrededor de la tabla */
+}
+.celda {
+    padding: 10px;
+    border: 1px double black; /* Borde alrededor de cada celda */
+    text-align: center; /* Alinear texto al centro */
+}
