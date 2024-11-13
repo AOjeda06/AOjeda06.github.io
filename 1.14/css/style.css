@@ -1,24 +1,26 @@
 #t2 {
-    border: 4px double black; /* Borde doble de 4px para la tabla */
+    border: 4px double black;
     width: 50%;
     margin: 0 auto;
-    border-collapse: collapse; /* Colapsa bordes para que se vean como uno solo */
+    border-collapse: collapse; 
 }
 
 #t2 th, #t2 td {
-    padding: 10px; /* Agregar espacio dentro de las celdas */
-    border: 2px double black; /* Borde doble de 2px para celdas */
+    padding: 10px; 
+    border: 2px double black; 
 }
 
 .tabla {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    grid-template-columns: repeat(3, 1fr);
     width: 50%;
     margin: 0 auto;
-    border: 1px double black; /* Borde alrededor de la tabla */
+    border: 1px double black;
+    padding: 1px;
 }
 .celda {
     padding: 10px;
-    border: 1px double black; /* Borde alrededor de cada celda */
-    text-align: center; /* Alinear texto al centro */
+    border: 1px double black;
+    text-align: center; 
+    margin: 1px;
 }
