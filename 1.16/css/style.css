@@ -8,6 +8,7 @@
 	height: 20%;
 	margin: 1px;
 	padding: 20px;
+	background-color: grey;
 }
 
 #div2 {
@@ -16,6 +17,7 @@
 	height: 20%;
 	margin: 1px;
 	padding: 20px;
+	background-color: red;
 }
 
 #div3 {
@@ -24,4 +26,5 @@
 	height: 20%;
 	margin: 1px;
 	padding: 20px;
+	background-color: green;
 }
