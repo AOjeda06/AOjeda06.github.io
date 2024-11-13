@@ -1,30 +1,27 @@
-div {
-			height: 200px;
-			width: 200px;
-		}
+
 #big {
-	display: block;
+	display: flex;
 }
 #div1 {
-	background-image:url('../img/aa.jpg');
-	background-size: 100px  ;
-	background-position: center;
-	border: 5px solid black;
-	background-repeat: no-repeat;
+	border: 1px solid black;
+	width: 20%;
+	height: 20%;
+	margin: 1px;
+	padding: 20px;
 }
 
 #div2 {
-	background-image: url('../img/bb.jpg') ;
-	background-repeat: repeat-x;
-	background-position: bottom;
-	border: 5px solid green;
-	background-size: 100px  ;
+	border: 1px solid black;
+	width: 20%;
+	height: 20%;
+	margin: 1px;
+	padding: 20px;
 }
 
 #div3 {
-	background-image: url('../img/cc.jpg') ;
-	background-repeat: repeat-y;
-	background-position: right;
-	border: 5px solid gray;
-	background-size: 100px  ;
+	border: 1px solid black;
+	width: 20%;
+	height: 20%;
+	margin: 1px;
+	padding: 20px;
 }
