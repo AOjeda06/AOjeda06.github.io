@@ -1,13 +1,12 @@
 #t2 {
-    border: 4px double black;
+    border: 1px outset black;
     width: 50%;
     margin: 0 auto;
-    border-collapse: collapse; 
 }
 
-#t2 th, #t2 td {
+#t2 td {
     padding: 10px; 
-    border: 2px double black; 
+    border: 1px inset black; 
 }
 
 .tabla {
