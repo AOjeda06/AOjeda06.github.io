@@ -1,32 +1,30 @@
 
 #big {
 	display: flex;
-	flex-direction: column-reverse;
+	border: 2px solid black;
+	margin: auto;
+	height: 200%;
+	justify-content: space-evenly;
+	background-color: blue;
+}
+
+div {
+	padding: 10px;
+}
+
+a {
+	color: white;
+	font-style: none;
 }
 
 #div1 {
-	border: 1px solid black;
-	width: 20%;
-	height: 20%;
-	margin: 1px;
-	padding: 20px;
-	background-color: grey;
+	
 }
 
 #div2 {
-	border: 1px solid black;
-	width: 20%;
-	height: 20%;
-	margin: 1px;
-	padding: 20px;
-	background-color: red;
+	
 }
 
 #div3 {
-	border: 1px solid black;
-	width: 20%;
-	height: 20%;
-	margin: 1px;
-	padding: 20px;
-	background-color: green;
+	
 }
