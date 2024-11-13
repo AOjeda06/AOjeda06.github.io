@@ -1,11 +1,11 @@
 #t2 {
-    border: 1px solid black; 
+    border: 4px double black; /* Borde doble de 4px para la tabla */
     width: 50%;
-    margin: 0 auto; 
-    border-collapse: collapse; 
+    margin: 0 auto;
+    border-collapse: collapse; /* Colapsa bordes para que se vean como uno solo */
 }
 
 #t2 th, #t2 td {
-    padding: 10px; 
-    border: 1px solid black; 
+    padding: 10px; /* Agregar espacio dentro de las celdas */
+    border: 2px double black; /* Borde doble de 2px para celdas */
 }
