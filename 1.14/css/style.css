@@ -1,30 +1,11 @@
-div {
-			height: 200px;
-			width: 200px;
-		}
-#big {
-	display: block;
-}
-#div1 {
-	background-image:url('../img/aa.jpg');
-	background-size: 100px  ;
-	background-position: center;
-	border: 5px solid black;
-	background-repeat: no-repeat;
+#t2 {
+    border: 1px solid black; /* Definir un borde completo */
+    width: 50%;
+    margin: 0 auto; /* Centrar la tabla */
+    border-collapse: collapse; /* Opcional: Colapsar los bordes */
 }
 
-#div2 {
-	background-image: url('../img/bb.jpg') ;
-	background-repeat: repeat-x;
-	background-position: bottom;
-	border: 5px solid green;
-	background-size: 100px  ;
-}
-
-#div3 {
-	background-image: url('../img/cc.jpg') ;
-	background-repeat: repeat-y;
-	background-position: right;
-	border: 5px solid gray;
-	background-size: 100px  ;
+#t2 th, #t2 td {
+    padding: 10px; /* Agregar espacio dentro de las celdas */
+    border: 1px solid black; /* Borde alrededor de las celdas */
 }
