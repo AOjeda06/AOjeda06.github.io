@@ -1,0 +1,22 @@
+html {
+	background-color: #B5F4FF;
+}
+
+#titulo {
+font-family: 'Helvetica', sans-serif;
+}
+
+header {
+	background-color: #007bff;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+
+}
+
+nav a:hover { 
+	color: #0056b3; 
+	transform: scale(1.1); 
+}
