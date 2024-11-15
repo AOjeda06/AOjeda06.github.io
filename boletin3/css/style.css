@@ -22,10 +22,14 @@ nav a:hover {
 
 #contenido {
 	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #contenido h2 {
 	font-size: 30px;
+	margin: 0px;
 }
 
 #contenido p {
