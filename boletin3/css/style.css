@@ -13,12 +13,12 @@ header {
 
 nav a {
 	text-decoration: none;
-	color: #007BFF;
-	transition: color 0.3s ease-in-out; /* Transición para enlaces */
+	color: red;
+	transition: color 0.3s ease-in-out;
 }
 
 nav a:hover {
-    color: #0056b3; /* Color del enlace al pasar el ratón */
+    color: purple;
 }
 
 #contenido {
@@ -89,12 +89,12 @@ p {
 	padding: 10px;
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
-	border-radius: 5px; /* Bordes redondeados */
-	transition: border-color 0.3s ease-in-out; /* Transición */
+	border-radius: 5px;
+	transition: border-color 0.3s ease-in-out; 
 }
 
 .formulario input:focus, .formulario textarea:focus {
-	border-color: #007BFF; /* Cambiar color del borde en foco */
+	border-color: #007BFF;
 }
 
 .formulario button {
@@ -102,12 +102,12 @@ p {
 	background-color: #007BFF;
 	color: white;
 	border: none;
-	border-radius: 5px; /* Bordes redondeados */
+	border-radius: 5px;
 	cursor: pointer;
-	transition: background-color 0.3s ease-in-out; /* Transición */
+	transition: background-color 0.3s ease-in-out; 
 }
 
 .formulario button:hover {
-	background-color: #0056b3; /* Color de fondo al pasar el ratón */
+	background-color: #0056b3; 
 }
         
