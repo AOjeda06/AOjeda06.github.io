@@ -41,3 +41,9 @@ height: 100%;
 footer {
 	background-color: #333;
 }
+
+footer p {
+	color: white;
+	text-align: center;
+	padding: 5px;
+}
