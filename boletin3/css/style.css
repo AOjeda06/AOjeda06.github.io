@@ -110,4 +110,9 @@ p {
 .formulario button:hover {
 	background-color: #0056b3; 
 }
-        
+
+#perfil {
+	height: 200px;
+	width: 150px;
+	float: right;
+}
