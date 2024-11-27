@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actv 4.1</title>
+    <style>
+        p {
+            font-family: Arial, sans-serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+        }
+        p.different-style-1 {
+            color: green;
+            font-size: 1.5em;
+            font-style: italic;
+            font-family: fantasy;
+        }
+        p.different-style-2 {
+            color: purple;
+            font-size: 1.3em;
+            font-style: oblique;
+            text-align: right;
+        }
+        p.different-style-3 {
+            color: darkred;
+            font-size: 1.1em;
+            font-style: normal;
+            text-align: left;
+            text-decoration: line-through;
+        }
+        .flex-container {
+            display: flex;
+        }
+        .flex {
+            width: 400px;
+            height: 200px;
+            padding: 10px;
+            border-radius: 15px;
+        }
+        .div1 { background-color: lightcoral; }
+        .div2 { background-color: lightblue; }
+        .div3 { background-color: lightgreen; }
+        .div1 a {
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+        }
+        #div2a1 { background-color: darkblue; }
+        #div2a2 { background-color: darkgreen; }
+        #div2a3 { background-color: darkred; }
+        .div2 a {
+            width: 100px;
+            height: 50px;
+            display: block;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+        }
+        #div1a1 { background-color: darkblue; }
+        #div1a2 { background-color: darkgreen; }
+        #div1a3 { background-color: darkred; }
+        .div3 a {
+            text-decoration: none;
+        }
+        .div3 a:hover {
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <p class="different-style-1">Este es un párrafo con estilo diferente 1.</p>
+    <p class="different-style-2">Este es un párrafo con estilo diferente 2.</p>
+    <p class="different-style-3">Este es un párrafo con estilo diferente 3.</p>
+
+    <hr>
+
+    <div class="flex-container">
+        <div class="div1 flex">
+        	<p>MOTOS</p>
+            <a id="div1a1" href="#">Enlace 1</a>
+            <a id="div1a2" href="#">Enlace 2</a>
+            <a id="div1a3" href="#">Enlace 3</a>
+        </div>
+        <div class="div2 flex">
+        	<p>COCHES</p>
+            <a id="div2a1" href="#">Enlace 1</a>
+            <a id="div2a2" href="#">Enlace 2</a>
+            <a id="div2a3" href="#">Enlace 3</a>
+        </div>
+        <div class="div3 flex">
+        	<p>BARCOS</p>
+            <a href="#">Enlace 1</a>
+            <a href="#">Enlace 2</a>
+            <a href="#">Enlace 3</a>
+        </div>
+    </div>
+</body>
+</html>
