@@ -16,6 +16,9 @@
     <button type="submit">Recibir Datos</button> 
 </form>
 
+<!-- Añade un div para la tabla -->
+<div id="data-table"></div>
+
 <script>
     function solicitudAjax() { 
         var IP = document.getElementById("IP").value;
@@ -23,13 +26,26 @@
             url: "https://ipwho.is/" + encodeURIComponent(IP), 
             method: "GET", 
             dataType: "json",
-            success: function(data) {
+            success: function(data) { 
                 console.log(data); 
+                mostrarDatosEnTabla(data);
             }, 
             error: function(xhr, status, error) {
                 console.log(`Error: ${xhr.status} - ${error}`);
             } 
         });
+    }
+
+    function mostrarDatosEnTabla(data) {
+        var table = '<table border="1">';
+        table += '<tr><th>Campo</th><th>Valor</th></tr>';
+        for (var clave in data) {
+            if (data.hasOwnProperty(clave)) {
+                table += `<tr><td>${clave}</td><td>${data[clave]}</td></tr>`;
+            }
+        }
+        table += '</table>';
+        document.getElementById('data-table').innerHTML = table;
     }
 </script>
 </body>
