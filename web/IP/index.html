@@ -53,9 +53,9 @@
 
             // Iterar sobre los datos y añadir filas a la tabla
             for (var clave in data) {
-                if (data.hasOwnProperty(clave)) {
+                //if (data.hasOwnProperty(clave)) {
                     table += `<tr><td>${clave}</td><td>${procesarValor(data[clave])}</td></tr>`;
-                }
+                //}
             }
 
             // Añadir enlace de Google Maps si latitud y longitud están disponibles
@@ -74,9 +74,9 @@
                 var subtabla = '<table class="table table-sm">';
                 // Iterar sobre las propiedades del objeto anidado
                 for (var subclave in valor) {
-                    if (valor.hasOwnProperty(subclave)) {
+                    //if (valor.hasOwnProperty(subclave)) {
                         subtabla += `<tr><td>${subclave}</td><td>${valor[subclave]}</td></tr>`;
-                    }
+                    //}
                 }
                 subtabla += '</table>';
                 return subtabla;
