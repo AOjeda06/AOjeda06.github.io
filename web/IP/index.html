@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IP</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>CONOCE LA UBICACION DE TU IP</h1>
+<form onsubmit="event.preventDefault(); solicitudAjax();">
+    <label for="IP">Nombre:</label>
+    <br> 
+    <input type="text" id="IP" name="IP">
+    <br> 
+    <button type="submit">Recibir Datos</button> 
+</form>
+
+<script>
+    function solicitudAjax() { 
+        var IP = document.getElementById("IP").value;
+        $.ajax({ 
+            url: "https://ipwho.is/" + encodeURIComponent(IP), 
+            method: "GET", 
+            dataType: "json",
+            success: function(data) {
+                console.log(data); 
+            }, 
+            error: function(xhr, status, error) {
+                console.log(`Error: ${xhr.status} - ${error}`);
+            } 
+        });
+    }
+</script>
+</body>
+</html>
