@@ -16,7 +16,6 @@
     <button type="submit">Recibir Datos</button> 
 </form>
 
-<!-- Añade un div para la tabla -->
 <div id="data-table"></div>
 
 <script>
@@ -39,13 +38,29 @@
     function mostrarDatosEnTabla(data) {
         var table = '<table border="1">';
         table += '<tr><th>Campo</th><th>Valor</th></tr>';
+
         for (var clave in data) {
             if (data.hasOwnProperty(clave)) {
-                table += `<tr><td>${clave}</td><td>${data[clave]}</td></tr>`;
+                table += `<tr><td>${clave}</td><td>${procesarValor(data[clave])}</td></tr>`;
             }
         }
+
         table += '</table>';
         document.getElementById('data-table').innerHTML = table;
+    }
+
+    function procesarValor(valor) {
+        if (typeof valor === 'object' && valor !== null) {
+            var subtabla = '<table>';
+            for (var subclave in valor) {
+                if (valor.hasOwnProperty(subclave)) {
+                    subtabla += `<tr><td>${subclave}</td><td>${valor[subclave]}</td></tr>`;
+                }
+            }
+            subtabla += '</table>';
+            return subtabla;
+        }
+        return valor;
     }
 </script>
 </body>
