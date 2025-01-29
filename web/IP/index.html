@@ -45,6 +45,11 @@
             }
         }
 
+        if (data.latitude && data.longitude) {
+            var googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`;
+            table += `<tr><td>Google Maps</td><td><a href="${googleMapsLink}" target="_blank">Ver ubicación</a></td></tr>`;
+        }
+
         table += '</table>';
         document.getElementById('data-table').innerHTML = table;
     }
