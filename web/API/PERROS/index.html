@@ -4,92 +4,86 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PERROS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
-    <form onsubmit="event.preventDefault(); solicitudImagen(); solicitudDatos()">
-        <div>
-            <label for="Raza">Raza:</label>
-            <input type="text" id="Raza" name="Raza">
+<body class="container mt-5">
+    <h1 class="text-center mb-4">Perros</h1>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form onsubmit="event.preventDefault(); solicitudImagenAleatoria();">
+                <div class="form-group">
+                    <label for="selectorRazas">Selecciona una raza:</label>
+                    <select class="form-control" id="selectorRazas" onchange="solicitudImagenRaza()"></select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Aleatorio</button>
+            </form>
+            <br>
+            <div id="imagenPerro" class="text-center"></div>
         </div>
-        <div>
-            <label for="Pais">Pais (opcional)</label>
-            <input type="text" id="Pais" name="Pais">
-        </div>
-        <button type="submit">Recibir Datos</button>
-    </form>
-    <br>
-    <div id="imagenPerro"></div>
-    <br>
-    <div id="data-table"></div>
+    </div>
 
-</body>
-<script type="text/javascript">
-    function solicitudImagen() { 
-        $.ajax({ 
-            url: "https://dog.ceo/api/breeds/image/random", 
-            method: "GET", 
-            dataType: "json", // Convierte la respuesta a objeto JSON 
-            success: function(data) { //200 o 201
-                console.log(data); 
-                mostrarImagen(data);
-            }, 
-            error: function(xhr, status, error) { 
-                console.log(`Error: ${xhr.status} - ${error}`); 
-            } 
-        });
-    }
-    function solicitudDatos() { 
-        var Raza = document.getElementById("Raza").value;
-        var Pais = document.getElementById("Pais").value; 
-        var url = Pais ? "https://dog.ceo/api/breed/" + encodeURIComponent(Pais) + "/" + encodeURIComponent(Raza) + "/images/random" 
-                       : "https://dog.ceo/api/breed/" + encodeURIComponent(Raza) + "/images/random";
-
-        $.ajax({ 
-            url: url, 
-            method: "GET", 
-            dataType: "json", // Convierte la respuesta a objeto JSON 
-            success: function(data) { //200 o 201
-                console.log(data); 
-                mostrarDatosEnTabla(data);
-            }, 
-            error: function(xhr, status, error) { 
-                console.log(`Error: ${xhr.status} - ${error}`); 
-            } 
-        });
-    }
-    function mostrarDatosEnTabla(data) {
-        var table = '<table class="table table-bordered">';
-        table += '<tr><th>Campo</th><th>Valor</th></tr>';
-
-        // Iterar sobre los datos y añadir filas a la tabla
-        for (var clave in data) {
-            if (data.hasOwnProperty(clave)) {
-                table += `<tr><td>${clave}</td><td>${procesarValor(data[clave])}</td></tr>`;
-            }
-        }
-
-        table += '</table>';
-        document.getElementById('data-table').innerHTML = table;
-    }
-    // Función para procesar los valores de los datos
-    function procesarValor(valor) {
-        if (typeof valor === 'object' && valor !== null) {
-            var subtabla = '<table class="table table-sm">';
-            // Iterar sobre las propiedades del objeto anidado
-            for (var subclave in valor) {
-                if (valor.hasOwnProperty(subclave)) {
-                    subtabla += `<tr><td>${subclave}</td><td>${valor[subclave]}</td></tr>`;
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Obtener lista de razas al cargar la página
+            $.ajax({
+                url: "https://dog.ceo/api/breeds/list/all",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    var selector = $('#selectorRazas');
+                    var razas = data.message;
+                    for (var raza in razas) {
+                        if (razas[raza].length === 0) {
+                            selector.append(new Option(raza, raza));
+                        } else {
+                            for (var i = 0; i < razas[raza].length; i++) {
+                                selector.append(new Option(`${razas[raza][i]} ${raza}`, `${raza}/${razas[raza][i]}`));
+                            }
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(`Error: ${xhr.status} - ${error}`);
                 }
-            }
-            subtabla += '</table>';
-            return subtabla;
+            });
+        });
+
+        function solicitudImagenAleatoria() {
+            $.ajax({
+                url: "https://dog.ceo/api/breeds/image/random",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    mostrarImagen(data);
+                },
+                error: function(xhr, status, error) {
+                    console.log(`Error: ${xhr.status} - ${error}`);
+                }
+            });
         }
-        return valor;
-    }
-    function mostrarImagen(data) {
-        var imagen = `<img src="${data.message}" alt="Imagen de un perro">`;
-        document.getElementById('imagenPerro').innerHTML = imagen;
-    }
-</script>
+
+        function solicitudImagenRaza() {
+            var seleccion = $('#selectorRazas').val();
+            var url = "https://dog.ceo/api/breed/" + seleccion + "/images/random";
+            
+            $.ajax({
+                url: url,
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    mostrarImagen(data);
+                },
+                error: function(xhr, status, error) {
+                    console.log(`Error: ${xhr.status} - ${error}`);
+                }
+            });
+        }
+
+        function mostrarImagen(data) {
+            var imagen = `<img src="${data.message}" class="img-fluid" alt="Imagen de un perro">`;
+            $('#imagenPerro').html(imagen);
+        }
+    </script>
+</body>
 </html>
