@@ -11,12 +11,12 @@
     <h1 class="text-center mb-4">Perros</h1>
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form onsubmit="event.preventDefault(); solicitudImagenAleatoria();">
+            <form onsubmit="event.preventDefault(); solicitudImagenRaza();">
                 <div class="form-group">
                     <label for="selectorRazas">Selecciona una raza:</label>
-                    <select class="form-control" id="selectorRazas" onchange="solicitudImagenRaza()"></select>
+                    <select class="form-control" id="selectorRazas"></select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Aleatorio</button>
+                <button type="submit" class="btn btn-primary btn-block">Foto de la raza seleccionada</button>
             </form>
             <br>
             <div id="imagenPerro" class="text-center"></div>
@@ -48,20 +48,6 @@
                 }
             });
         });
-
-        function solicitudImagenAleatoria() {
-            $.ajax({
-                url: "https://dog.ceo/api/breeds/image/random",
-                method: "GET",
-                dataType: "json",
-                success: function(data) {
-                    mostrarImagen(data);
-                },
-                error: function(xhr, status, error) {
-                    console.log(`Error: ${xhr.status} - ${error}`);
-                }
-            });
-        }
 
         function solicitudImagenRaza() {
             var seleccion = $('#selectorRazas').val();
