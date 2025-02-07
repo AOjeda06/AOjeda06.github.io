@@ -45,7 +45,7 @@
             let objJson = {
                 DESCRIPCION: $("#DESCRIPCION").val(),
                 PROVEEDOR: $("#PROVEEDOR").val(),
-                PRECIO: $("#PRECIO").val()
+                PRECIO: parseFloat(parseFloat($("#PRECIO").val()).toFixed(2))
             };
 
             if (comprobar(objJson) != null) {
