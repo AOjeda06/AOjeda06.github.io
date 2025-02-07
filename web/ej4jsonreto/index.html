@@ -7,6 +7,91 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    
+    <h1>Insertar datos dinámicos</h1>
+    <form onsubmit="event.preventDefault(); crearObj();"> 
+        <label for="DESCRIPCION">DESCRIPCION:</label>
+        <br> 
+        <input type="text" id="DESCRIPCION" name="DESCRIPCION">
+        <br> 
+        <label for="PROVEEDOR">PROVEEDOR:</label>
+        <br> 
+        <input type="number" id="PROVEEDOR" name="PROVEEDOR">
+        <br> 
+        <label for="PRECIO">PRECIO:</label>
+        <br> 
+        <input type="number" id="PRECIO" name="PRECIO">
+        <br><br> 
+        <button type="submit">Enviar Datos</button> 
+    </form>
+    <br>
+    <p id="Error"></p>
+    <br>
+    <h2>DATOS BBDD</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DESCRIPCION</th>
+                <th>PROVEEDOR</th>
+                <th>PRECIO</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </body>
+<script type="text/javascript">
+
+    function crearObj() {
+        let objJson = {
+            DESCRIPCION: $("#DESCRIPCION").val(),
+            PROVEEDOR: $("#PROVEEDOR").val(),
+            PRECIO: $("#PRECIO").val();
+        }
+
+        if (comprobar() != null) {
+            enviarDatos(objJson);
+        }
+    }
+
+    function comprobar(objJson) {
+        if (!objJson.DESCRIPCION || !objJson.PROVEEDOR || !objJson.PRECIO) {
+                alert("Todos los campos son obligatorios.");
+                return null;
+            }
+    }
+
+    function enviarDatos(objJson) {
+        $.ajax({
+        url: "https://lm.iesnervion.es/reto4.php",
+        method: "POST",
+        data: JSON.stringify(objeto_js),
+        contentType: "application/json", 
+        dataType: "json",
+        success: function(response) {
+            imprimirDatos(response);
+        },
+        error: function(xhr, status, error) {
+            imprimirError(`Error: ${xhr.status} - ${error}`);
+        }
+    });
+    }
+
+    function imprimirDatos(response) {
+        for (fila:response){
+         fila = "<tr>"+
+                        "<td>" + response.id + "</td>"+
+                        "<td>" + response.descripcion + "</td>"+
+                        "<td>" + response.idProveedor + "</td>"+
+                        "<td>" + response.precio + "</td>"+
+                        "</tr>";
+        }
+
+        $("#dataTable tbody").append(fila);
+    }
+
+    function imprimirError(String) {
+        $("#Error").append("<h2>"+"<b>"+String+"</b>"+"</h2>");
+    }
+</script>
 </html>
