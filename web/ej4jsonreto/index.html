@@ -86,12 +86,12 @@
         function imprimirDatos(lista) {
             $("#dataTable tbody").empty(); // Limpiar la tabla antes de agregar nuevos datos
             lista.forEach(function(item) {
-                let fila = "<tr>"+
-                            "<td onclick="eliminarFila()">" + item.id + "</td>"+
-                            "<td>" + item.descripcion + "</td>"+
-                            "<td>" + item.idProveedor + "</td>"+
-                            "<td>" + item.precio + "</td>"+
-                            "</tr>";
+                let fila = '<tr>'+
+                            '<td onclick="eliminarFila('+item.id+')">' + item.id + '</td>'+
+                            '<td>' + item.descripcion + '</td>'+
+                            '<td>' + item.idProveedor + '</td>'+
+                            '<td>' + item.precio + '</td>'+
+                            '</tr>';
                 $("#dataTable tbody").append(fila);
             });
         }
@@ -100,8 +100,20 @@
             $("#Error").html("<h2><b>" + mensaje + "</b></h2>");
         }
 
-        function eliminarFila(){
-            xhr.open("DELETE", url+"?”+nombreVariable+”=" + valorVariable, true);
+        function eliminarFila(id){
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("DELETE", `https://lm.iesnervion.es/reto4.php?id=${id}`, true);
+            xhr.responseType = "json"; 
+            xhr.onload = function() {
+                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201)) { 
+                    imprimirError("Se ha eliminado correctamente.");
+                    enviarDatos(xhr.response.lista);
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>
