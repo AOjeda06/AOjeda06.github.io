@@ -101,16 +101,15 @@
         }
 
         function eliminarFila(id){
-
             const xhr = new XMLHttpRequest();
             xhr.open("DELETE", `https://lm.iesnervion.es/reto4.php?id=${id}`, true);
             xhr.responseType = "json"; 
             xhr.onload = function() {
-                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201)) { 
+                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201)) {
                     imprimirError("Se ha eliminado correctamente.");
                     enviarDatos(xhr.response.lista);
                 } else {
-                    imprimirError(`Error: ${xhr.status} - ${error}`);
+                    console.log(`Error: ${xhr.status}`);
                 }
             };
             xhr.send();
