@@ -43,9 +43,9 @@
     <script type="text/javascript">
         function crearObj() {
             let objJson = {
-                DESCRIPCION: $("#DESCRIPCION").val(),
-                PROVEEDOR: $("#PROVEEDOR").val(),
-                PRECIO: parseFloat(parseFloat($("#PRECIO").val()).toFixed(2))
+                descripcion: $("#DESCRIPCION").val(),
+                idProveedor: $("#PROVEEDOR").val(),
+                precio: parseFloat(parseFloat($("#PRECIO").val()).toFixed(2))
             };
 
             if (comprobar(objJson) != null) {
@@ -54,7 +54,7 @@
         }
 
         function comprobar(objJson) {
-            if (!objJson.DESCRIPCION || !objJson.PROVEEDOR || !objJson.PRECIO) {
+            if (!objJson.descripcion || !objJson.idProveedor || !objJson.precio) {
                 alert("Todos los campos son obligatorios.");
                 return null;
             }
