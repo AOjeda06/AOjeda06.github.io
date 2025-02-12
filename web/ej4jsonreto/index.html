@@ -110,7 +110,7 @@
                     imprimirError("Se ha eliminado correctamente.");
                     enviarDatos(xhr.response.lista);
                 } else {
-                    console.log(`Error: ${xhr.status}`);
+                    imprimirError(`Error: ${xhr.status} - ${error}`);
                 }
             };
             xhr.send();
