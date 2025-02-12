@@ -87,7 +87,7 @@
             $("#dataTable tbody").empty(); // Limpiar la tabla antes de agregar nuevos datos
             lista.forEach(function(item) {
                 let fila = "<tr>"+
-                            "<td>" + item.id + "</td>"+
+                            "<td onclick="eliminarFila()">" + item.id + "</td>"+
                             "<td>" + item.descripcion + "</td>"+
                             "<td>" + item.idProveedor + "</td>"+
                             "<td>" + item.precio + "</td>"+
@@ -98,6 +98,10 @@
 
         function imprimirError(mensaje) {
             $("#Error").html("<h2><b>" + mensaje + "</b></h2>");
+        }
+
+        function eliminarFila(){
+            xhr.open("DELETE", url+"?”+nombreVariable+”=" + valorVariable, true);
         }
     </script>
 </body>
