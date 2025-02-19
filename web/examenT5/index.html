@@ -40,6 +40,7 @@
 </body>
 <script type="text/javascript">
 	let llave;
+	let llaveFinal;
 
 	function generarObj() {
 		let objJson = {
@@ -49,7 +50,7 @@
             llave: "",
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password ) {
                 alert("Todos los campos son obligatorios.");
                 return null;
             }
@@ -66,7 +67,7 @@
             llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
                 alert("Todos los campos son obligatorios.");
                 return null;
             }
@@ -83,7 +84,24 @@
             llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
+                alert("Todos los campos son obligatorios.");
+                return null;
+            }
+
+		console.log(objJson);
+		enviarDatos3(objJson);
+	}
+
+	function generarObj4(llave) {
+		let objJson = {
+			nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            llave: llave,
+		}
+
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
                 alert("Todos los campos son obligatorios.");
                 return null;
             }
@@ -149,6 +167,25 @@
 		    });
 	}
 
+	function enviarDatos4(objeto_js){
+		$.ajax({
+		        url: "https://lm.iesnervion.es/secret.php",
+		        method: "POST",
+		        data: JSON.stringify(objeto_js),
+		        contentType: "application/json", // Especifica el tipo de contenido
+		        dataType: "json", // La respuesta será interpretada como JSON
+		        success: function(response) {
+		            console.log(response);
+		            imprimirInstrucciones(response.instrucciones);
+		        },
+		        error: function(xhr, status, error) {
+		            imprimirError(`Error: ${xhr.status} - ${error}`);
+		            console.log(`Error: ${xhr.status} - ${error}`);
+		        }
+		    });
+	}
+
+
 	function imprimirError(mensaje) {
             $("#Error").html("<h2>" + mensaje + "</h2>");
         }
@@ -169,7 +206,11 @@
     }
 
     function pulsa(btn) {
-    	
+    	llaveFinal += this.value;
+
+    	if (llaveFinal = "CLAVE") {
+    		generarObj4(llaveFinal);
+    	}
     }
 </script>
 </html>
