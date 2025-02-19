@@ -7,11 +7,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<ol id="instrucciones">
-	<li>INSTRUCCIONES: </li>
-</ol>
-
- <form>
+<ul id="instrucciones">
+	<h3>INSTRUCCIONES: </h3>
+	<li>Introduce tu nomre, apellidos y llave</li>
+	<li>Tu contraseña inicial será '1Q2W3E', despúes de cada login se le asignará una nueva para su siguiente login</li>
+</ul>
+<form>
         <label for="nombre">nombre:</label>
         <br> 
         <input type="nombre" id="nombre" name="nombre">
@@ -20,13 +21,30 @@
         <br> 
         <input type="apellidos" id="apellidos" name="apellidos">
         <br>
-        <label for="password">apellidos:</label>
+        <label for="password">password:</label>
         <br> 
-        <input type="apellidos" id="nuapellidosmero" name="apellidos">
-        <button type="button" onclick="">Enviar</button>
-    </form>
+        <input type="password" id="password" name="password">
+        <br>
+        <label for="llave">llave:</label>
+        <br>
+        <input id="llave" name="llave">
+        <br>
+        <br>
+        <button type="button" onclick="generarObj()">Enviar</button>
+</form>
 </body>
 <script type="text/javascript">
-	
+	let llave;
+
+	function generarObj() {
+		let objJson = {
+			nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            llave: $("#llave").val()
+		}
+
+		console.log(objJson);
+	}
 </script>
 </html>
