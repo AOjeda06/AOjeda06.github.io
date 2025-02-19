@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PALABRAS Y VOCALES</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>PALABRAS Y VOCALES</h1>
+	<button type="submit" onclick="obtenerDatos()" >Nueva palabra</button>
+</body>
+<script type="text/javascript">
+	function obtenerDatos(){
+		$.ajax({ 
+		    url: "https://clientes.api.greenborn.com.ar/public-random-words", 
+		    method: "GET", 
+		    dataType: "json", // Convierte la respuesta a objeto JSON 
+		    success: function(data) { //200 o 201
+		    console.log(data); 
+		    }, 
+		    error: function(xhr, status, error) { 
+		    console.log(`Error: ${xhr.status} - ${error}`); 
+		    } 
+		    });
+	}
+</script>
+</html>
