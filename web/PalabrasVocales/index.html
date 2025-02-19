@@ -8,7 +8,12 @@
 </head>
 <body>
     <h1>PALABRAS Y VOCALES</h1>
-    <button type="submit" onclick="obtenerDatos()">Nueva palabra</button>
+    <form>
+        <label for="numero">Número:</label>
+        <br> 
+        <input type="number" id="numero" name="numero">
+        <button type="button" onclick="numeroDePeticiones()">Nueva palabra</button>
+    </form>
     <br>
     <div id="estadisticas"></div>
     <h2> Palabras que empiezan por cada vocal:  </h2>
@@ -19,6 +24,13 @@
 </body>
 <script type="text/javascript">
     let Palabras = [];
+
+    function numeroDePeticiones(){
+        let numero = parseInt(document.getElementById("numero").value);
+        for (let i = 0; i < numero; i++){
+            obtenerDatos();
+        }
+    }
 
     function obtenerDatos(){
         $.ajax({ 
