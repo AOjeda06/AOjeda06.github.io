@@ -26,14 +26,14 @@
             method: "GET", 
             dataType: "json", // Convierte la respuesta a objeto JSON 
             success: function(data) { //200 o 201
-            console.log(data); 
-            Palabras.push(data[0]); // data is an array, push the first element
-            imprimirPalabras();
+                console.log(data); 
+                Palabras.push(data[0]); // data is an array, push the first element
+                imprimirPalabras();
             }, 
             error: function(xhr, status, error) { 
-            console.log(`Error: ${xhr.status} - ${error}`); 
+                console.log(`Error: ${xhr.status} - ${error}`); 
             } 
-            });
+        });
     }
 
     function imprimirPalabras(){
@@ -72,9 +72,9 @@
                 case 'u':
                     u++;
                     break;
-                default :
-                	consonantes++;
-                	break;
+                default:
+                    consonantes++;
+                    break;
             }
         });
 
@@ -91,26 +91,27 @@
     }
 
     function actualizarEstadisticasLongitud(){
-    	let longest = null;
-    	let shortest = null;
-    	Palabras.forEach(function(palabra) {
-            if(shortest = null){
-            	shortest = palabra;
-            };
-            if(longest = null){
-            	longest = palabra;
-            };
-            if (palabra.length() > longest.length()) {
-            	longest = palabra
-            };
-            if (palabra.length() < shortest.length()) {
-            	shortest = palabra
-            };
+        let longest = "";
+        let shortest = "";
+        Palabras.forEach(function(palabra) {
+            if (shortest === "") {
+                shortest = palabra;
+            }
+            if (longest === "") {
+                longest = palabra;
+            }
+            if (palabra.length > longest.length) {
+                longest = palabra;
+            }
+            if (palabra.length < shortest.length) {
+                shortest = palabra;
+            }
         });
 
-        $('estadisticas2').html(
-        	"<ul>"+"Palabra más larga: "+ longest +"</ul>"
-        	"<ul>"+"Palabra más corta: "+ shortest +"</ul>")
+        $('#estadisticas2').html(
+            "<ul><p>Palabra más larga: " + longest + "</p></ul>" +
+            "<ul><p>Palabra más corta: " + shortest + "</p></ul>"
+        );
     }
 </script>
 </html>
