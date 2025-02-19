@@ -11,6 +11,7 @@
 	<h3>INSTRUCCIONES: </h3>
 	<li>Introduce tu nomre, apellidos y llave</li>
 	<li>Tu contraseña inicial será '1Q2W3E', despúes de cada login se le asignará una nueva para su siguiente login</li>
+	<li>Todos los campos son obligatorios</li>
 </ul>
 <form>
         <label for="nombre">nombre:</label>
@@ -32,6 +33,10 @@
         <br>
         <button type="button" onclick="generarObj()">Enviar</button>
 </form>
+<br>
+<br>
+<p id="Error"></p>
+<div id="instrucciones"></div>
 </body>
 <script type="text/javascript">
 	let llave;
@@ -44,7 +49,40 @@
             llave: $("#llave").val()
 		}
 
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
+                alert("Todos los campos son obligatorios.");
+                return null;
+            }
+
 		console.log(objJson);
+		enviarDatos(objJson);
 	}
+
+	function enviarDatos(objeto_js){
+		$.ajax({
+		        url: "https://lm.iesnervion.es/secret.php",
+		        method: "POST",
+		        data: JSON.stringify(objeto_js),
+		        contentType: "application/json", // Especifica el tipo de contenido
+		        dataType: "json", // La respuesta será interpretada como JSON
+		        success: function(response) {
+		            console.log(response);
+		            imprimirInstrucciones(response);
+		        },
+		        error: function(xhr, status, error) {
+		            imprimirError(`Error: ${xhr.status} - ${error}`);
+		        }
+		    });
+	}
+	function imprimirError(mensaje) {
+            $("#Error").html("<h2><b>" + mensaje + "</b></h2>");
+        }
+
+    function imprimirInstrucciones(mensaje ) {
+    	mensaje.forEach(function(instruccion) {
+            let instrucciones = "<ul>" + instruccion + "</ul>";
+            $("#instrucciones").append(instrucciones);
+        });
+    }
 </script>
 </html>
