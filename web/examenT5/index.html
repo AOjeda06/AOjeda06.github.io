@@ -6,19 +6,19 @@
 	<title>SOCIEDAD SECRETA</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
-/* EXAMEN Y NOMBRE*/
-<h1>SOCIEDAD SECRETA</h1>
+<body> 
+<!-- INTRO -->
+<h1>SOCIEDAD SECRETA</h1> 
 <h2>Andrés Ojeda Rodríguez</h2>
 <br>
-// INSTRUCCIONES INICIALES PARA COMENZAR
+<!-- INSTRUCCIONES PARA COMENZAR CON EL PROGRAMA -->
 <ul id="instrucciones1">
 	<h3>INSTRUCCIONES: </h3>
 	<li>Introduce tu nomre, apellidos y llave</li>
 	<li>Tu contraseña inicial será '1Q2W3E', despúes de cada login se le asignará una nueva para su siguiente login</li>
 	<li>Todos los campos son obligatorios</li>
 </ul>
-// FORMULARIO PARA EL ENVÍO DE DATOS
+<!-- FORMULARIO PARA LA INTRODUCCION DE DATOS -->
 <form>
         <label for="nombre">nombre:</label>
         <br> 
@@ -37,18 +37,19 @@
 </form>
 <br>
 <br>
-// 'P' DONDE SE IMPRIMEN LOS ERRORES
+<!-- 'P' DONDE SE IMPRIMEN LOS ERRORES -->
 <p id="Error"></p>
-// DIV DONDE SE IMPRIMIRAN LAS INSTRUCCIONES QUE NOS MANDE LA API
+<!-- 'DIV' DONDE SE IMPRIMEN LAS INSTRUCCIONES QUE NOS DEVUELVE LA API -->
 <div id="instrucciones2"></div>
-// DIV DONDE GENERAR EL DIV LLAVE2
+<!-- 'DIV' EN EL QUE SE VA A CREAR EL DIV CON ID 'LLAVE2' -->
 <div id="contenedor"></div>
 </body>
 <script type="text/javascript">
 
-	// let llave;
+	// VARIABLE GLOBAL PARA LA LLAVE FINAL
 	let llaveFinal;
 
+	// FUNCION PARA GENERAR EL OBJETO DEL PRIMER ENVÍO
 	function generarObj() {
 		let objJson = {
 			nombre: $("#nombre").val(),
@@ -66,6 +67,7 @@
 		enviarDatos(objJson);
 	}
 
+	// FUNCION PARA GENERAR EL OBJETO DEL SEGUNDO ENVÍO (CON LLAVE)
 	function generarObj2(llave) {
 		let objJson = {
 			nombre: $("#nombre").val(),
@@ -74,15 +76,11 @@
             llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
-                alert("Todos los campos son obligatorios.");
-                return null;
-            }
-
 		console.log(objJson);
 		enviarDatos2(objJson);
 	}
 
+	// FUNCION PARA GENERAR EL OBJETO DEL TERCER ENVÍO
 		function generarObj3(llave) {
 		let objJson = {
 			nombre: $("#nombre").val(),
@@ -91,15 +89,11 @@
             llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
-                alert("Todos los campos son obligatorios.");
-                return null;
-            }
-
 		console.log(objJson);
 		enviarDatos3(objJson);
 	}
 
+	// FUNCION PARA GENERAR EL OBJETO DEL ENVÍO FINAL
 	function generarObj4(llave) {
 		let objJson = {
 			nombre: $("#nombre").val(),
@@ -108,63 +102,70 @@
             llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
-                alert("Todos los campos son obligatorios.");
-                return null;
-            }
-
 		console.log(objJson);
 		enviarDatos3(objJson);
 	}
 
+	// FUNCIÓN PARA EL PRIMER ENVÍO DE DATOS
 	function enviarDatos(objeto_js){
 		$.ajax({
 		        url: "https://lm.iesnervion.es/secret.php",
 		        method: "POST",
 		        data: JSON.stringify(objeto_js),
-		        contentType: "application/json", // Especifica el tipo de contenido
-		        dataType: "json", // La respuesta será interpretada como JSON
+		        contentType: "application/json", 
+		        dataType: "json", 
 		        success: function(response) {
+		        	// SACA LA RESPUESTA POR CONSOLA
 		            console.log(response);
+		            // IMPRIME LAS INSTRUCCIONES QUE RECIBE DE LA API
 		            imprimirInstrucciones(response.instrucciones);
+		            // TOMA LA LLAVE DEL RESPONSE Y LA ENVÍA A GENERAR EL SEGUNDO OBJETO
 		            generarObj2(response.llave);
 		        },
 		        error: function(xhr, status, error) {
+		        	// IMPRIME LOS ERRORES SI LOS HAY
 		            imprimirError(`Error: ${xhr.status} - ${error}`);
 		            console.log(`Error: ${xhr.status} - ${error}`);
 		        }
 		    });
 	}
 
+	// SEGUNDO ENVIO DE DATOS
 	function enviarDatos2(objeto_js){
 		$.ajax({
 		        url: "https://lm.iesnervion.es/secret.php",
 		        method: "POST",
 		        data: JSON.stringify(objeto_js),
-		        contentType: "application/json", // Especifica el tipo de contenido
-		        dataType: "json", // La respuesta será interpretada como JSON
+		        contentType: "application/json", 
+		        dataType: "json", 
 		        success: function(response) {
 		            console.log(response);
+		            // IMPRIME LAS NUEVAS INSTRUCCIONES
 		            imprimirInstrucciones(response.instrucciones);
+		            // LLAMA A LA FUNCION PARA CREAR EL DIV QUE SE NOS REQUIERE
 		            crearDiv();
+		            // LLAMA A GENERAR EL OBJETO PARA EL SIGUIENTE PASO
 		           	generarObj3(response.llave);
 		        },
 		        error: function(xhr, status, error) {
+		        	// IMPRIME ERRORES
 		            imprimirError(`Error: ${xhr.status} - ${error}`);
 		            console.log(`Error: ${xhr.status} - ${error}`);
 		        }
 		    });
 	}
 
+	// ENVIO DE DATTOS 3
 	function enviarDatos3(objeto_js){
 		$.ajax({
 		        url: "https://lm.iesnervion.es/secret.php",
 		        method: "POST",
 		        data: JSON.stringify(objeto_js),
-		        contentType: "application/json", // Especifica el tipo de contenido
-		        dataType: "json", // La respuesta será interpretada como JSON
+		        contentType: "application/json", 
+		        dataType: "json", 
 		        success: function(response) {
 		            console.log(response);
+		            // IMPRIME LAS INSTRUCCIONES
 		            imprimirInstrucciones(response.instrucciones);
 		        },
 		        error: function(xhr, status, error) {
@@ -174,15 +175,17 @@
 		    });
 	}
 
+	// ENVIO DE DATOS FINAL
 	function enviarDatos4(objeto_js){
 		$.ajax({
 		        url: "https://lm.iesnervion.es/secret.php",
 		        method: "POST",
 		        data: JSON.stringify(objeto_js),
-		        contentType: "application/json", // Especifica el tipo de contenido
-		        dataType: "json", // La respuesta será interpretada como JSON
+		        contentType: "application/json", 
+		        dataType: "json", 
 		        success: function(response) {
 		            console.log(response);
+		            // IMPRIME EL MENSAJE FINAL
 		            imprimirInstrucciones(response.instrucciones);
 		        },
 		        error: function(xhr, status, error) {
@@ -192,29 +195,35 @@
 		    });
 	}
 
-
+	// FUNCION PARA IMPRIMIR ERRORES
 	function imprimirError(mensaje) {
             $("#Error").html("<h2>" + mensaje + "</h2>");
         }
 
+    // FUNCION PARA IMPRIMIR LAS INSTRUCCIONES QUE VAMOS RECIBIENDO
     function imprimirInstrucciones(mensaje ) {
     	$("#instrucciones").empty();
+    	// HACE UN FOR EACH AL ARRAY QUE CONTIENE LAS INSTRUCCIONES Y LAS VA ESCRIBIENDO POR PUNTOS EN UNA LISTA SIN ORDEN
     	mensaje.forEach(function(instruccion) {
             let instrucciones = "<ul>" + instruccion + "</ul>";
             $("#instrucciones2").append(instrucciones);
         });
     }
 
+    // FUNCION PARA CREAR EL DIV CON ID LLAVE2
     function crearDiv() {
     	let div = 
     		"<div id= 'llave2'>"+"</div>";
-    	
+    	// LO CREAMOS DENTRO DEL DIV CON ID CONTENEDOR
     	$("#contenedor").append(div);
     }
 
+    // FUNCION PARA LOS BOTONES CON LETRAS
     function pulsa(btn) {
+    	// CONCATENA A LA LLAVE FINAL EL VALOR DEL BTN CLICADO
     	llaveFinal += this.value;
 
+    	// CUANDO LA LLAVE FINAL ES 'CLAVE', GENERA EL ÚLTIMO OBJETO CON DICHA CLAVE
     	if (llaveFinal = "CLAVE") {
     		generarObj4(llaveFinal);
     	}
