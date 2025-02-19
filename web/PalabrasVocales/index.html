@@ -13,6 +13,8 @@
     <div id="estadisticas"></div>
     <h2> Palabras que empiezan por cada vocal:  </h2>
     <br>
+    <div id="estadisticas2"></div>
+    <br>
     <div id="palabras"></div>
 </body>
 <script type="text/javascript">
@@ -42,15 +44,17 @@
             $("#palabras").append(PalabraRandom);
         });
 
-        actualizarEstadisticas();
+        actualizarEstadisticasLetraInicial();
+        actualizarEstadisticasLongitud();
     }
 
-    function actualizarEstadisticas(){
+    function actualizarEstadisticasLetraInicial(){
         let a = 0;
         let e = 0;
         let i = 0;
         let o = 0;
         let u = 0;
+        let consonantes = 0;
         Palabras.forEach(function(palabra) {
             switch(palabra.charAt(0).toLowerCase()) {
                 case 'a':
@@ -68,6 +72,9 @@
                 case 'u':
                     u++;
                     break;
+                default :
+                	consonantes++;
+                	break;
             }
         });
 
@@ -78,8 +85,32 @@
             "<p>" + "I: " + i + "</p>" +
             "<p>" + "O: " + o + "</p>" +
             "<p>" + "U: " + u + "</p>" +
+            "<p>" + "Consonantes: " + consonantes + "</p>" +
             "</ul>"
         );
+    }
+
+    function actualizarEstadisticasLongitud(){
+    	let longest = null;
+    	let shortest = null;
+    	Palabras.forEach(function(palabra) {
+            if(shortest = null){
+            	shortest = palabra;
+            };
+            if(longest = null){
+            	longest = palabra;
+            };
+            if (palabra.length() > longest.length()) {
+            	longest = palabra
+            };
+            if (palabra.length() < shortest.length()) {
+            	shortest = palabra
+            };
+        });
+
+        $('estadisticas2').html(
+        	"<ul>"+"Palabra más larga: "+ longest +"</ul>"
+        	"<ul>"+"Palabra más corta: "+ shortest +"</ul>")
     }
 </script>
 </html>
