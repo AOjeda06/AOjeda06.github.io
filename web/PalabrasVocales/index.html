@@ -9,6 +9,10 @@
 <body>
 	<h1>PALABRAS Y VOCALES</h1>
 	<button type="submit" onclick="obtenerDatos()" >Nueva palabra</button>
+	<br>
+	<div id="estadisticas"></div>
+	<br>
+	<div id="palabras"></div>
 </body>
 <script type="text/javascript">
 	function obtenerDatos(){
@@ -27,7 +31,8 @@
 	}
 
 	function imprimirPalabra(data){
-
+		let nuevaPalabra = "<ul>"+data+"</ul>";
+		$("#div").append(nuevaPalabra);
 	}
 </script>
 </html>
