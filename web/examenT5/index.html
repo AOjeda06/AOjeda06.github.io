@@ -10,7 +10,7 @@
 <h1>SOCIEDAD SECRETA</h1>
 <h2>Andrés Ojeda Rodríguez</h2>
 <br>
-<ul id="instrucciones">
+<ul id="instrucciones1">
 	<h3>INSTRUCCIONES: </h3>
 	<li>Introduce tu nomre, apellidos y llave</li>
 	<li>Tu contraseña inicial será '1Q2W3E', despúes de cada login se le asignará una nueva para su siguiente login</li>
@@ -29,30 +29,26 @@
         <br> 
         <input type="password" id="password" name="password">
         <br>
-        <label for="llave">llave:</label>
-        <br>
-        <input id="llave" name="llave">
-        <br>
         <br>
         <button type="button" onclick="generarObj()">Enviar</button>
 </form>
 <br>
 <br>
 <p id="Error"></p>
-<div id="instrucciones"></div>
+<div id="instrucciones2"></div>
 </body>
 <script type="text/javascript">
 	let llave;
 
-	function generarObj() {
+	function generarObj(llave) {
 		let objJson = {
 			nombre: $("#nombre").val(),
             apellidos: $("#apellidos").val(),
             password: $("#password").val(),
-            llave: $("#llave").val()
+            llave: llave,
 		}
 
-		if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.llave) {
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
                 alert("Todos los campos son obligatorios.");
                 return null;
             }
@@ -71,20 +67,23 @@
 		        success: function(response) {
 		            console.log(response);
 		            imprimirInstrucciones(response.instrucciones);
+		            generarObj(response.llave);
 		        },
 		        error: function(xhr, status, error) {
 		            imprimirError(`Error: ${xhr.status} - ${error}`);
+		            console.log(`Error: ${xhr.status} - ${error}`);
 		        }
 		    });
 	}
 	function imprimirError(mensaje) {
-            $("#Error").append("<h2>" + mensaje + "</h2>");
+            $("#Error").html("<h2>" + mensaje + "</h2>");
         }
 
     function imprimirInstrucciones(mensaje ) {
+    	$("#instrucciones").empty();
     	mensaje.forEach(function(instruccion) {
             let instrucciones = "<ul>" + instruccion + "</ul>";
-            $("#instrucciones").append(instrucciones);
+            $("#instrucciones2").append(instrucciones);
         });
     }
 </script>
