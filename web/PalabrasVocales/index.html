@@ -1,75 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PALABRAS Y VOCALES</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PALABRAS Y VOCALES</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<h1>PALABRAS Y VOCALES</h1>
-	<button type="submit" onclick="obtenerDatos()" >Nueva palabra</button>
-	<br>
-	<div id="estadisticas"></div>
-	<br>
-	<div id="palabras"></div>
+    <h1>PALABRAS Y VOCALES</h1>
+    <button type="submit" onclick="obtenerDatos()">Nueva palabra</button>
+    <br>
+    <div id="estadisticas"></div>
+    <h2> Palabras que empiezan por cada vocal:  </h2>
+    <br>
+    <div id="palabras"></div>
 </body>
 <script type="text/javascript">
-	let Palabras = [];
+    let Palabras = [];
 
-	function obtenerDatos(){
-		$.ajax({ 
-		    url: "https://random-word-api.herokuapp.com/word?lang=es", 
-		    method: "GET", 
-		    dataType: "json", // Convierte la respuesta a objeto JSON 
-		    success: function(data) { //200 o 201
-		    console.log(data); 
-		    Palabras.push(data);
-		    }, 
-		    error: function(xhr, status, error) { 
-		    console.log(`Error: ${xhr.status} - ${error}`); 
-		    } 
-		    });
-	}
-
-	function imprimirPalabras(data){
-		sort(Palabras);
-		$("#palabras").empty();
-		Palabras.forEach(function(fila) {
-                let PalabraRandom = "<ul>"+ data+"</ul>";
-                $("#palabras").append(PalabraRandom);
+    function obtenerDatos(){
+        $.ajax({ 
+            url: "https://random-word-api.herokuapp.com/word?lang=es", 
+            method: "GET", 
+            dataType: "json", // Convierte la respuesta a objeto JSON 
+            success: function(data) { //200 o 201
+            console.log(data); 
+            Palabras.push(data[0]); // data is an array, push the first element
+            imprimirPalabras();
+            }, 
+            error: function(xhr, status, error) { 
+            console.log(`Error: ${xhr.status} - ${error}`); 
+            } 
             });
+    }
 
-		actualizarEstadisticas();
-		}
+    function imprimirPalabras(){
+        Palabras.sort();
+        $("#palabras").empty();
+        Palabras.forEach(function(palabra) {
+            let PalabraRandom = "<ul>" + palabra + "</ul>";
+            $("#palabras").append(PalabraRandom);
+        });
 
-	function actualizarEstadisticas(){
-		let a;
-		let e;
-		let i;
-		let o;
-		let u;
-		Palabras.forEach(function(fila) {
-                if (fila.charAt(0)==a) {
-                	a++;
-                }
-                if (fila.charAt(0)==e) {
-                	e++;
-                }
-                if (fila.charAt(0)==i) {
-                	i++;
-                }
-                if (fila.charAt(0)==o) {
-                	o++;
-                }
-                if (fila.charAt(0)==u) {
-                	u++;
-                }
-            });
+        actualizarEstadisticas();
+    }
 
-		$('#estadisticas').append(
-			"<ul>" + "<p>"+ "A: "+ a + "</p>" + "</ul>"
-			)
-	}
+    function actualizarEstadisticas(){
+        let a = 0;
+        let e = 0;
+        let i = 0;
+        let o = 0;
+        let u = 0;
+        Palabras.forEach(function(palabra) {
+            switch(palabra.charAt(0).toLowerCase()) {
+                case 'a':
+                    a++;
+                    break;
+                case 'e':
+                    e++;
+                    break;
+                case 'i':
+                    i++;
+                    break;
+                case 'o':
+                    o++;
+                    break;
+                case 'u':
+                    u++;
+                    break;
+            }
+        });
+
+        $('#estadisticas').html(
+            "<ul>" +
+            "<p>" + "A: " + a + "</p>" +
+            "<p>" + "E: " + e + "</p>" +
+            "<p>" + "I: " + i + "</p>" +
+            "<p>" + "O: " + o + "</p>" +
+            "<p>" + "U: " + u + "</p>" +
+            "</ul>"
+        );
+    }
 </script>
 </html>
