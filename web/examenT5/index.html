@@ -36,11 +36,29 @@
 <br>
 <p id="Error"></p>
 <div id="instrucciones2"></div>
+<div id="contenedor"></div>
 </body>
 <script type="text/javascript">
 	let llave;
 
-	function generarObj(llave) {
+	function generarObj() {
+		let objJson = {
+			nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            llave: "",
+		}
+
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
+                alert("Todos los campos son obligatorios.");
+                return null;
+            }
+
+		console.log(objJson);
+		enviarDatos(objJson);
+	}
+
+	function generarObj2(llave) {
 		let objJson = {
 			nombre: $("#nombre").val(),
             apellidos: $("#apellidos").val(),
@@ -54,7 +72,24 @@
             }
 
 		console.log(objJson);
-		enviarDatos(objJson);
+		enviarDatos2(objJson);
+	}
+
+		function generarObj3(llave) {
+		let objJson = {
+			nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            llave: llave,
+		}
+
+		if (!objJson.nombre || !objJson.apellidos || !objJson.password /*|| !objJson.llave*/) {
+                alert("Todos los campos son obligatorios.");
+                return null;
+            }
+
+		console.log(objJson);
+		enviarDatos3(objJson);
 	}
 
 	function enviarDatos(objeto_js){
@@ -67,7 +102,7 @@
 		        success: function(response) {
 		            console.log(response);
 		            imprimirInstrucciones(response.instrucciones);
-		            generarObj(response.llave);
+		            generarObj2(response.llave);
 		        },
 		        error: function(xhr, status, error) {
 		            imprimirError(`Error: ${xhr.status} - ${error}`);
@@ -75,6 +110,45 @@
 		        }
 		    });
 	}
+
+	function enviarDatos2(objeto_js){
+		$.ajax({
+		        url: "https://lm.iesnervion.es/secret.php",
+		        method: "POST",
+		        data: JSON.stringify(objeto_js),
+		        contentType: "application/json", // Especifica el tipo de contenido
+		        dataType: "json", // La respuesta será interpretada como JSON
+		        success: function(response) {
+		            console.log(response);
+		            imprimirInstrucciones(response.instrucciones);
+		            crearDiv();
+		           	generarObj3(response.llave);
+		        },
+		        error: function(xhr, status, error) {
+		            imprimirError(`Error: ${xhr.status} - ${error}`);
+		            console.log(`Error: ${xhr.status} - ${error}`);
+		        }
+		    });
+	}
+
+	function enviarDatos3(objeto_js){
+		$.ajax({
+		        url: "https://lm.iesnervion.es/secret.php",
+		        method: "POST",
+		        data: JSON.stringify(objeto_js),
+		        contentType: "application/json", // Especifica el tipo de contenido
+		        dataType: "json", // La respuesta será interpretada como JSON
+		        success: function(response) {
+		            console.log(response);
+		            imprimirInstrucciones(response.instrucciones);
+		        },
+		        error: function(xhr, status, error) {
+		            imprimirError(`Error: ${xhr.status} - ${error}`);
+		            console.log(`Error: ${xhr.status} - ${error}`);
+		        }
+		    });
+	}
+
 	function imprimirError(mensaje) {
             $("#Error").html("<h2>" + mensaje + "</h2>");
         }
@@ -85,6 +159,17 @@
             let instrucciones = "<ul>" + instruccion + "</ul>";
             $("#instrucciones2").append(instrucciones);
         });
+    }
+
+    function crearDiv() {
+    	let div = 
+    		"<div id= 'llave2'>"+"</div>";
+    	
+    	$("#contenedor").append(div);
+    }
+
+    function pulsa(btn) {
+    	
     }
 </script>
 </html>
