@@ -7,6 +7,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<h1>SOCIEDAD SECRETA</h1>
+<h2>Andrés Ojeda Rodríguez</h2>
+<br>
 <ul id="instrucciones">
 	<h3>INSTRUCCIONES: </h3>
 	<li>Introduce tu nomre, apellidos y llave</li>
@@ -67,7 +70,7 @@
 		        dataType: "json", // La respuesta será interpretada como JSON
 		        success: function(response) {
 		            console.log(response);
-		            imprimirInstrucciones(response);
+		            imprimirInstrucciones(response.instrucciones);
 		        },
 		        error: function(xhr, status, error) {
 		            imprimirError(`Error: ${xhr.status} - ${error}`);
@@ -75,7 +78,7 @@
 		    });
 	}
 	function imprimirError(mensaje) {
-            $("#Error").html("<h2><b>" + mensaje + "</b></h2>");
+            $("#Error").append("<h2>" + mensaje + "</h2>");
         }
 
     function imprimirInstrucciones(mensaje ) {
