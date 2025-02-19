@@ -39,6 +39,37 @@
                 let PalabraRandom = "<ul>"+ data+"</ul>";
                 $("#palabras").append(PalabraRandom);
             });
+
+		actualizarEstadisticas();
 		}
+
+	function actualizarEstadisticas(){
+		let a;
+		let e;
+		let i;
+		let o;
+		let u;
+		Palabras.forEach(function(fila) {
+                if (fila.charAt(0)==a) {
+                	a++;
+                }
+                if (fila.charAt(0)==e) {
+                	e++;
+                }
+                if (fila.charAt(0)==i) {
+                	i++;
+                }
+                if (fila.charAt(0)==o) {
+                	o++;
+                }
+                if (fila.charAt(0)==u) {
+                	u++;
+                }
+            });
+
+		$('#estadisticas').append(
+			"<ul>" + "<p>"+ "A: "+ a + "</p>" + "</ul>"
+			)
+	}
 </script>
 </html>
