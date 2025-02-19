@@ -7,15 +7,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+/* EXAMEN Y NOMBRE*/
 <h1>SOCIEDAD SECRETA</h1>
 <h2>Andrés Ojeda Rodríguez</h2>
 <br>
+// INSTRUCCIONES INICIALES PARA COMENZAR
 <ul id="instrucciones1">
 	<h3>INSTRUCCIONES: </h3>
 	<li>Introduce tu nomre, apellidos y llave</li>
 	<li>Tu contraseña inicial será '1Q2W3E', despúes de cada login se le asignará una nueva para su siguiente login</li>
 	<li>Todos los campos son obligatorios</li>
 </ul>
+// FORMULARIO PARA EL ENVÍO DE DATOS
 <form>
         <label for="nombre">nombre:</label>
         <br> 
@@ -34,12 +37,16 @@
 </form>
 <br>
 <br>
+// 'P' DONDE SE IMPRIMEN LOS ERRORES
 <p id="Error"></p>
+// DIV DONDE SE IMPRIMIRAN LAS INSTRUCCIONES QUE NOS MANDE LA API
 <div id="instrucciones2"></div>
+// DIV DONDE GENERAR EL DIV LLAVE2
 <div id="contenedor"></div>
 </body>
 <script type="text/javascript">
-	let llave;
+
+	// let llave;
 	let llaveFinal;
 
 	function generarObj() {
