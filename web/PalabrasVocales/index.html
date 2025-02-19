@@ -33,6 +33,11 @@
 	}
 
 	function imprimirPalabras(data){
+		$("#palabras").empty();
+		Palabras.forEach(function(fila) {
+                let PalabraRandom = "<ul>"+ data+"</ul>";
+                $("#palabras").append(PalabraRandom);
+            });
 		}
 </script>
 </html>
