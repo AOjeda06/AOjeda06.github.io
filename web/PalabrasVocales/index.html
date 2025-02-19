@@ -17,12 +17,17 @@
 		    method: "GET", 
 		    dataType: "json", // Convierte la respuesta a objeto JSON 
 		    success: function(data) { //200 o 201
-		    console.log(data); 
+		    console.log(data.list); 
+		    imprimirPalabra(data);
 		    }, 
 		    error: function(xhr, status, error) { 
 		    console.log(`Error: ${xhr.status} - ${error}`); 
 		    } 
 		    });
+	}
+
+	function imprimirPalabra(data){
+
 	}
 </script>
 </html>
