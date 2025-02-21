@@ -33,11 +33,11 @@
         <button type="button" onclick="generarObj()">Enviar</button>
     </form>
     <br>
+    <h1 id="apuesta"></h1>
     <h1 id="dado1"></h1>
     <h1 id="dado2"></h1>
     <h1 id="resultado"></h1>
     <h1 id="usuario"></h1>
-    <h1 id="apuesta"></h1>
     <br>
     <ol id="listaGanadores"></ol>
     <br>
@@ -45,23 +45,23 @@
 </body>
 <script>
     function generarObj(idValue) {
-        let objJson = {
+        let objeto_js = {
             nombre: $("#nombre").val(),
             apellidos: $("#apellidos").val(),
             password: $("#password").val(),
             apuesta: $("#apuesta").val(),
             id: idValue,
         }
-        if (!objJson.nombre || !objJson.apellidos || !objJson.password || !objJson.apuesta) {
+        if (!objeto_js.nombre || !objeto_js.apellidos || !objeto_js.password || !objeto_js.apuesta) {
             alert("Todos los campos son obligatorios.");
             return null;
         }
 
-        console.log(objJson);
-        enviarDatos(objJson);
+        console.log(objeto_js);
+        enviarDatos(objeto_js);
     }
 
-    function enviarDatos() {
+    function enviarDatos(objeto_js) {
         $.ajax({
             url: "https://lm.iesnervion.es/dados.php",
             method: "POST",
@@ -71,8 +71,24 @@
             success: function (response) {
                 // SACA LA RESPUESTA POR CONSOLA
                 console.log(response);
+                imprimirDatos(response);
             },
         });
+    }
+
+    function imprimirDatos(response) {
+        $("#dado1").text("Dado 1: " + response.dado1);
+        $("#dado2").text("Dado 2: " + response.dado2);
+        $("#resultado").text("Resultado: " + response.resultado);
+        $("#apuesta").text("Apuesta: " + response.apuesta);
+        $("#usuario").text("Usuario: " + response.usuario);
+        $("#mensaje").text(response.mensaje);
+        if (response.ganadores) {
+            $("#listaGanadores").empty();
+            response.ganadores.forEach((ganador) => {
+                $("#listaGanadores").append("<li>" + ganador + "</li>");
+            });
+        }
     }
 </script>
 
