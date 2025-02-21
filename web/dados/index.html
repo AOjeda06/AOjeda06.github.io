@@ -79,10 +79,10 @@
     function imprimirDatos(response) {
         $("#dado1").text("Dado 1: " + response.dado1);
         $("#dado2").text("Dado 2: " + response.dado2);
-        $("#resultado").text("Resultado: " + response.resultado);
+        $("#resultado").text("Resultado: " + (response.dado1+response.dado2));
         $("#apuesta").text("Apuesta: " + response.apuesta);
-        $("#usuario").text("Usuario: " + response.usuario);
         $("#mensaje").text(response.mensaje);
+        $("#usuario").text("Usuario: " + response.usuario);
         if (response.ganadores) {
             $("#listaGanadores").empty();
             response.ganadores.forEach((ganador) => {
