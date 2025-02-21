@@ -57,10 +57,21 @@
         }
 
         console.log(objJson);
+        enviarDatos(objJson);
     }
 
     function enviarDatos() {
-        
+        $.ajax({
+            url: "https://lm.iesnervion.es/dados.php",
+            method: "POST",
+            data: JSON.stringify(objeto_js),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                // SACA LA RESPUESTA POR CONSOLA
+                console.log(response);
+            },
+        });
     }
 </script>
 
