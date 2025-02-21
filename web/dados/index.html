@@ -37,7 +37,7 @@
     <h1 id="dado1"></h1>
     <h1 id="dado2"></h1>
     <h1 id="resultado"></h1>
-    <h1 id="usuario"></h1>
+    <ul id="usuario"></ul>
     <br>
     <ol id="listaGanadores"></ol>
     <br>
@@ -82,10 +82,17 @@
         $("#resultado").text("Resultado: " + (response.dado1+response.dado2));
         $("#apuesta").text("Apuesta: " + response.apuesta);
         $("#mensaje").text(response.mensaje);
-        $("#usuario").text("Usuario: " + response.usuario);
+        $("#usuario").empty();
+        if (typeof response.usuario === 'object') {
+            for (const key in response.usuario) {
+            if (response.usuario.hasOwnProperty(key)) {
+                $("#usuario").append("<li>" + "<h3>" + key + ": " + response.usuario[key] + "</h3>" +"</li>");
+            }
+            }
+        }
         if (response.ganadores) {
             $("#listaGanadores").empty();
-            response.ganadores.forEach((ganador) => {
+            response.ganadores.forEach(function(ganador)  {
                 $("#listaGanadores").append("<li>" + ganador + "</li>");
             });
         }
