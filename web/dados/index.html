@@ -31,6 +31,15 @@
     <br>    
 </body>
 <script>
-    
+    function generarObj() {
+        let objJson = {
+            nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            apuesta: $("#apuesta").val(),
+            id: $("#id").val(),
+        }
+        console.log(objJson);
+    }
 </script>
 </html>
