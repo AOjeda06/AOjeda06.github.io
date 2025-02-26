@@ -30,7 +30,6 @@ const Controller = {
     // Función para manejar el clic en una fila de la tabla
     handleRowClick: function () {
         Model.eliminarFila($(this).data("id"));
-        $(this).remove();
 
         // Actualizamos las estadísticas
         Controller.actualizarEstadisticas();
