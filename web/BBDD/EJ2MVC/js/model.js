@@ -25,7 +25,9 @@ const Model = {
 
     // Funcion para eliminar una fila del array
     eliminarFila: function (id) {
-        filas = filas.filter(f => f.id !== id);
+        if (id !== "tableHeader") {
+            filas = filas.filter(f => f.id !== id);
+        }
     },
 
     // Funcion para serializar un array
