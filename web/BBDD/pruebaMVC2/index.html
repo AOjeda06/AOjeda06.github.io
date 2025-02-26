@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List MVC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #taskList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #taskList li {
+            margin: 5px 0;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lista de Tareas</h1>
+    <input type="text" id="taskInput" placeholder="Nueva tarea">
+    <button id="addTaskButton">Añadir</button>
+    <ul id="taskList"></ul>
+
+    <script src="model.js"></script>
+    <script src="view.js"></script>
+    <script src="controller.js"></script>
+    <script>
+        // Inicializar la aplicación
+        const model = new TaskModel();
+
+    </script>
+</body>
+
+</html>
