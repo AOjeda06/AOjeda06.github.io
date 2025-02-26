@@ -8,12 +8,9 @@ const Controller = {
             const newItem = $('#item-input').val();
             if (newItem) {
                 Model.addItem(newItem);
-                this.updateView();
+                const items = Model.getItems();
+                View.render(items);
             }
         });
-    },
-    updateView() {
-        const items = Model.getItems();
-        View.render(items);
     },
 };
