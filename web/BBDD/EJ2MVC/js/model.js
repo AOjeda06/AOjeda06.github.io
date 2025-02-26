@@ -1,20 +1,31 @@
-class HobbysModel {
-    constructor() {
-        this.tasks = [];
-    }
+let filas = [];
+let idCounter = 0;
 
-    // Añadir una tarea
-    addTask(task) {
-        this.tasks.push(task);
-    }
+const Model = {
+    generarObj: function () {
+        return {
+            id: idCounter++,
+            nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            edad: $("#edad").val(),
+            ciudad: $("#ciudad").val()
+        };
+    },
 
-    // Obtener todas las tareas
-    getTasks() {
-        return this.tasks;
-    }
+    guardarFila: function (fila) {
+        filas.push(fila);
+        this.serializar(filas);
+    },
 
-    // Eliminar una tarea por su índice
-    deleteTask(index) {
-        this.tasks.splice(index, 1);
+    eliminarFila: function (id) {
+        filas = filas.filter(f => f.id !== id);
+    },
+
+    serializar: function (array) {
+        return JSON.stringify(array);
+    },
+
+    deserializar: function (filasSerializado) {
+        return JSON.parse(filasSerializado);
     }
-}
+};
