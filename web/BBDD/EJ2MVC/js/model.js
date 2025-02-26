@@ -27,6 +27,7 @@ const Model = {
     eliminarFila: function (id) {
         if (id !== "tableHeader") {
             filas = filas.filter(f => f.id !== id);
+            $(this).remove();
         }
     },
 
