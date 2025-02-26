@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EJ2</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Insertar datos dinámicos</h1>
+    <form onsubmit="event.preventDefault(); generarObj(); guardarFila();">
+        <label for="nombre">Nombre:</label>
+        <br>
+        <input type="text" id="nombre" name="nombre">
+        <br>
+        <label for="apellidos">Apellidos:</label>
+        <br>
+        <input type="text" id="apellidos" name="apellidos">
+        <br>
+        <label for="edad">Edad:</label>
+        <br>
+        <input type="number" id="edad" name="edad">
+        <br>
+        <label for="ciudad">Ciudad:</label>
+        <br>
+        <input type="text" id="ciudad" name="ciudad">
+        <br><br>
+        <button type="submit">Enviar Datos</button>
+    </form>
+    <h2>Datos Personales</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se añadirán las filas generadas dinámicamente -->
+        </tbody>
+    </table>
+    <h2>Estadísticas de Edades</h2>
+    <p id="estadisticas"></p>
+
+    <script type="text/javascript">
+        // Variable global para almacenar las filas
+        let filas = [];
+        let idCounter = 0; // Contador para asignar IDs únicos
+
+        function generarObj() {
+            // Obtener los valores de los campos del formulario usando jQuery
+            let objJson = {
+                id: idCounter++, // Asignar un ID único
+                nombre: $("#nombre").val(),
+                apellidos: $("#apellidos").val(),
+                edad: $("#edad").val(),
+                ciudad: $("#ciudad").val()
+            };
+
+            // Verificar que todos los campos estén rellenos
+            if (!objJson.nombre || !objJson.apellidos || !objJson.edad || !objJson.ciudad) {
+                alert("Todos los campos son obligatorios.");
+                return;
+            }
+
+            // Generar una fila con sus datos
+            let fila = generaTr(objJson);
+            // Añadir la fila al tbody
+            $("#dataTable tbody").append(fila);
+
+            // Actualizar estadísticas de edades
+            actualizarEstadisticas();
+        }
+
+        function generaTr(objJson) {
+            // Crear la fila con los datos y añadir el evento onclick para eliminar la fila
+            let fila = "<tr data-id='" + objJson.id + "' onclick='eliminarFila(this)'>" +
+                "<td>" + objJson.nombre + "</td>" +
+                "<td>" + objJson.apellidos + "</td>" +
+                "<td>" + objJson.edad + "</td>" +
+                "<td>" + objJson.ciudad + "</td>" +
+                "</tr>";
+            return fila;
+        }
+
+        function eliminarFila(fila) {
+            // Obtener el ID de la fila a eliminar
+            let id = $(fila).data("id");
+
+            // Eliminar la fila del objeto filas que tenga el ID de la fila que queremos eliminar: Filtramos en el array filas, quitando todas las filas (f) que den false en la comprobacion del ID que buscamos, creará un nuevo array que contendrá solo los elementos que resultaron true en la comprobacion
+            filas = filas.filter(f => f.id !== id);
+
+            // Eliminar la fila de la tabla
+            $(fila).remove();
+
+            // Actualizar estadísticas de edades después de eliminar una fila
+            actualizarEstadisticas();
+        }
+
+        function actualizarEstadisticas() {
+            // Creamos un array para almacenar las edades
+            let edades = [];
+            // Seleccionamos con el selector de JQuery los tr de la tbody con id dataTable, y en cada una que seleccione se va a ejecutar la siguiente funcion: creamos la variable edad, de tipo int, y coge el texto de lo que hay en la td número 3 (0,1,2) de la tr en la que estamos aplicando la funcion ahora mismo, con parseint lo convertimos a int, y ese int final que hemos obtenido lo metemos al array edades.
+            $("#dataTable tbody tr").each(function () {
+                let edad = parseInt($(this).find("td:eq(2)").text());
+                edades.push(edad);
+            });
+
+            if (edades.length > 0) {
+                // Va sumando uno tras otro los valores el array, siendo a (acumulador) y b (sig valor en el array), y el acumuluador comienza en 0.
+                let suma = edades.reduce((a, b) => a + b, 0);
+                let media = suma / edades.length;
+                let maximo = Math.max(...edades);
+                let minimo = Math.min(...edades);
+
+                console.log("Suma de edades:", suma);
+                console.log("Media de edades:", media);
+                console.log("Edad máxima:", maximo);
+                console.log("Edad mínima:", minimo);
+
+                // Mostrar estadísticas en el elemento HTML
+                $("#estadisticas").html(
+                    "Suma de edades: " + suma + "<br>" +
+                    "Media de edades: " + media + "<br>" +
+                    "Edad máxima: " + maximo + "<br>" +
+                    "Edad mínima: " + minimo
+                );
+            } else {
+                $("#estadisticas").html("No hay datos de edad.");
+            }
+        }
+
+        function guardarFila() {
+            let fila = {
+                id: idCounter, // Asignar el mismo ID que en generarObj
+                nombre: $("#nombre").val(),
+                apellidos: $("#apellidos").val(),
+                edad: $("#edad").val(),
+                ciudad: $("#ciudad").val()
+            };
+            filas.push(fila);
+            serializar(filas);
+        }
+
+        function serializar(array) {
+            let filasSerializado = JSON.stringify(array);
+            generaTabla(filasSerializado);
+        }
+
+        function generaTabla(filasSerializado) {
+            // Deserializar la lista
+            let filasDeserializado = JSON.parse(filasSerializado);
+            // Eliminar la tabla existente
+            $("#dataTable tbody").empty();
+            // Crear una nueva tabla con los datos deserializados
+            filasDeserializado.forEach(function (fila) {
+                let filaHtml = generaTr(fila);
+                $("#dataTable tbody").append(filaHtml);
+            });
+        }
+    </script>
+</body>
+
+</html>
