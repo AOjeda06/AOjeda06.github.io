@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DADOS DE LA SUERTE</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>DADOS DE LA SUERTE</h1>
+    <h2>Andrés Ojeda Rodríguez</h2>
+    <br>
+    <form>
+        <label for="nombre">nombre:</label>
+        <br>
+        <input type="nombre" id="nombre" name="nombre">
+        <br>
+        <label for="apellidos">apellidos:</label>
+        <br>
+        <input type="apellidos" id="apellidos" name="apellidos">
+        <br>
+        <label for="password">password:</label>
+        <br>
+        <input type="password" id="password" name="password">
+        <br>
+        <label for="apuesta">apuesta:</label>
+        <br>
+        <input type="number" id="apuesta" name="apuesta" min="1" max="12">
+        <br>
+        <input type="hidden" id="id" name="id" value="id">
+        <button type="button" onclick="generarObj()">Enviar</button>
+    </form>
+    <br>
+    <h1 id="apuesta"></h1>
+    <h1 id="dado1"></h1>
+    <h1 id="dado2"></h1>
+    <h1 id="resultado"></h1>
+    <ul id="usuario"></ul>
+    <br>
+    <ol id="listaGanadores"></ol>
+    <br>
+    <p id="mensaje"></p>
+</body>
+<script>
+    function generarObj(idValue) {
+        let objeto_js = {
+            nombre: $("#nombre").val(),
+            apellidos: $("#apellidos").val(),
+            password: $("#password").val(),
+            apuesta: $("#apuesta").val(),
+            id: idValue,
+        }
+        if (!objeto_js.nombre || !objeto_js.apellidos || !objeto_js.password || !objeto_js.apuesta) {
+            alert("Todos los campos son obligatorios.");
+            return null;
+        }
+
+        console.log(objeto_js);
+        enviarDatos(objeto_js);
+    }
+
+    function enviarDatos(objeto_js) {
+        $.ajax({
+            url: "https://lm.iesnervion.es/dados.php",
+            method: "POST",
+            data: JSON.stringify(objeto_js),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                // SACA LA RESPUESTA POR CONSOLA
+                console.log(response);
+                imprimirDatos(response);
+            },
+        });
+    }
+
+    function imprimirDatos(response) {
+        $("#dado1").text("Dado 1: " + response.dado1);
+        $("#dado2").text("Dado 2: " + response.dado2);
+        $("#resultado").text("Resultado: " + (response.dado1+response.dado2));
+        $("#apuesta").text("Apuesta: " + response.apuesta);
+        $("#mensaje").text(response.mensaje);
+        $("#usuario").empty();
+        if (typeof response.usuario === 'object') {
+            for (const key in response.usuario) {
+            if (response.usuario.hasOwnProperty(key)) {
+                $("#usuario").append("<li>" + "<h3>" + key + ": " + response.usuario[key] + "</h3>" +"</li>");
+            }
+            }
+        }
+        if (response.ganadores) {
+            $("#listaGanadores").empty();
+            response.ganadores.forEach(function(ganador)  {
+                $("#listaGanadores").append("<li>" + ganador + "</li>");
+            });
+        }
+    }
+</script>
+
+</html>
