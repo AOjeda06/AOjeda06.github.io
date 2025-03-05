@@ -9,16 +9,17 @@ const Controller = {
     handleFormSubmit: function (event) {
         event.preventDefault();
 
+        let objJson = Model.generarObj();
+
         // Comprobamos que los campos no estén vacíos
         if (!objJson.nombre || !objJson.apellidos || !objJson.edad || !objJson.ciudad) {
             alert("Todos los campos son obligatorios.");
             return;
         }
 
-        let objJson = Model.generarObj();
-
-        // Guardamos la fila en el modelo (en el array con los datos de las filas) y actualizamos las estadísticas
-        Model.guardarFila(View.generaTr(objJson));
+        // Generamos el tr y lo guardamos en el modelo
+        let fila = View.generaTr(objJson);
+        Model.guardarFila(fila);
 
         // Imprimimos todas las filas
         View.actualizarTabla(Model.filas);

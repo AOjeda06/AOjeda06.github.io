@@ -5,7 +5,6 @@ const View = {
         $("#dataForm").on("submit", Controller.handleFormSubmit);
         $("#dataTable").on("click", "tr", Controller.handleRowClick);
     },
-    
 
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
@@ -17,15 +16,14 @@ const View = {
                 <td>${objJson.ciudad}</td>
             </tr>
         `;
-
     },
-    
+
     // Función para actualizar la tabla
-    actualizarTabla: function (filas) {
+    actualizarTabla: function (filas = []) {
         // Borra la tabla entera y la reimprime
         $("#dataTable tbody").empty();
         filas.forEach(fila => {
-            $("#dataTable tbody").append(this.generaTr(fila));
+            $("#dataTable tbody").append(fila);
         });
     },
 
