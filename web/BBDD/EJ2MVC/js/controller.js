@@ -34,7 +34,7 @@ const Controller = {
     
         // Actualizamos las estadísticas
         Controller.actualizarEstadisticas();
-    }
+    },
 
     // Función para actualizar las estadísticas
     actualizarEstadisticas: function () {

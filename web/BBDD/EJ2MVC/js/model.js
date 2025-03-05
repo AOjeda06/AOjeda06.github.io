@@ -29,7 +29,7 @@ const Model = {
             filas = filas.filter(f => f.id !== parseInt(id));
             $(`#row-${id}`).remove();
         }
-    }
+    },
 
     // Funcion para serializar un array
     serializar: function (array) {
