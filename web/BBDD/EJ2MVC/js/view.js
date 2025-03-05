@@ -10,7 +10,7 @@ const View = {
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <tr data-id="${objJson.id}" onclick="Controller.handleRowClick()">
+            <tr data-id="${objJson.id}">
                 <td>${objJson.nombre}</td>
                 <td>${objJson.apellidos}</td>
                 <td>${objJson.edad}</td>
