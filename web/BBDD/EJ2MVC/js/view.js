@@ -53,5 +53,20 @@ const View = {
             // Muestra un mensaje si no hay datos de edad
             $("#estadisticas").html("No hay datos de edad.");
         }
+    },
+
+    // Función para actualizar las estadísticas
+    actualizarEstadisticas: function () {
+        // Crea un array para los datos de las edades
+        let edades = [];
+
+        // Recorre las filas de la tabla y añade las edades al array
+        $("#dataTable tbody tr").each(function () {
+            let edad = parseInt($(this).find("td:eq(2)").text());
+            edades.push(edad);
+        });
+
+        // Muestra las estadísticas
+        View.mostrarEstadisticas(edades);
     }
 };

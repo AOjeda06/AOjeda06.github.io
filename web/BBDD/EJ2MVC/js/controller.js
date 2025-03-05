@@ -24,7 +24,7 @@ const Controller = {
         Model.guardarFila(objJson);
 
         // Actualizamos las estadísticas
-        Controller.actualizarEstadisticas();
+        View.actualizarEstadisticas();
     },
 
     // Función para manejar el clic en una fila de la tabla
@@ -34,26 +34,9 @@ const Controller = {
         Model.eliminarFila(id);
     
         // Actualizamos las estadísticas
-        Controller.actualizarEstadisticas();
+        View.actualizarEstadisticas();
     },
 
-    // Función para actualizar las estadísticas
-    actualizarEstadisticas: function () {
-        // Crea un array para los datos de las edades
-        let edades = [];
-
-        // Recorre las filas de la tabla y añade las edades al array
-        $("#dataTable tbody tr").each(function () {
-            let edad = parseInt($(this).find("td:eq(2)").text());
-            edades.push(edad);
-        });
-
-        // Muestra las estadísticas
-        View.mostrarEstadisticas(edades);
-    }
 };
 
-// Inicialización del controlador
-$(document).ready(function () {
-    Controller.init();
-});
+
