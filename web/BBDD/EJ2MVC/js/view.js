@@ -14,12 +14,11 @@ const View = {
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <tr data-id="${objJson.id}" id="row-${objJson.id}">
+            <tr id="${objJson.id}" id="row-${objJson.id}">
                 <td>${objJson.nombre}</td>
                 <td>${objJson.apellidos}</td>
                 <td>${objJson.edad}</td>
                 <td>${objJson.ciudad}</td>
-                <td><button class="eliminar-fila" data-id="${objJson.id}">Eliminar</button></td>
             </tr>
         `;
     },
