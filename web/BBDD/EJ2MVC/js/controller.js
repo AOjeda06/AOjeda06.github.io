@@ -29,6 +29,7 @@ const Controller = {
 
     // Función para manejar el clic en una fila de la tabla
     handleRowClick: function () {
+        // Elimina 'row-' del id de la fila y se lo pasa a la función eliminarFila
         let id = $(this).attr("id").replace("row-", "");
         Model.eliminarFila(id);
     
