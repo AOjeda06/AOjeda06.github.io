@@ -9,6 +9,7 @@ const Controller = {
     handleFormSubmit: function (event) {
         event.preventDefault();
 
+        // Creamos el objeto
         let objJson = Model.generarObj();
 
         // Comprobamos que los campos no estén vacíos
@@ -17,7 +18,7 @@ const Controller = {
             return;
         }
 
-        // Generamos el tr y lo guardamos en el modelo
+        // Generamos el objeto en el array del modelo
         Model.guardarFila(objJson);
 
         // Imprimimos todas las filas

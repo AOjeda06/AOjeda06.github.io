@@ -6,12 +6,11 @@ let filas = [];
 
 // Clase modelo
 const Model = {
-    // Función para obtener las filas
-
+    // Función para obtener el array con los objetos
     obtenerFilas: function () {
         return filas;
     },
-    
+
     // Funcion para generar un objeto con los datos del formulario
     generarObj: function () {
         return {
@@ -23,7 +22,7 @@ const Model = {
         };
     },
 
-    // Funcion para guardar una fila en el array y serializarlo
+    // Funcion para guardar una fila en el array 
     guardarFila: function (fila) {
         filas.push(fila);
         console.log(filas);

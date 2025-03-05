@@ -22,7 +22,7 @@ const View = {
     // Función para actualizar la tabla
     actualizarTabla: function (filas = []) {
         console.log(filas); 
-        // Borra la tabla entera y la reimprime
+        // Borra la tabla entera y la reimprime con los datos de los objetos del array de objetos
         $("#dataTable tbody").empty();
         filas.forEach(fila => {
             $("#dataTable tbody").append(View.generaTr(fila));
