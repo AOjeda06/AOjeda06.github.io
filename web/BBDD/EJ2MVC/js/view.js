@@ -6,7 +6,6 @@ const View = {
         $("#dataTable").on("click", "tr", Controller.handleRowClick);
     },
     
-
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
