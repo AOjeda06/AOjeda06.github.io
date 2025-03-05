@@ -8,7 +8,6 @@ const Controller = {
     // Función para manejar el envío del formulario
     handleFormSubmit: function (event) {
         event.preventDefault();
-        let objJson = Model.generarObj();
 
         // Comprobamos que los campos no estén vacíos
         if (!objJson.nombre || !objJson.apellidos || !objJson.edad || !objJson.ciudad) {
@@ -16,12 +15,13 @@ const Controller = {
             return;
         }
 
-        // Añadimos la fila a la tabla
-        let fila = View.generaTr(objJson);
-        $("#dataTable tbody").append(fila);
+        let objJson = Model.generarObj();
 
         // Guardamos la fila en el modelo (en el array con los datos de las filas) y actualizamos las estadísticas
-        Model.guardarFila(objJson);
+        Model.guardarFila(View.generaTr(objJson));
+
+        // Imprimimos todas las filas
+        View.actualizarTabla(Model.filas);
 
         // Actualizamos las estadísticas
         View.actualizarEstadisticas();

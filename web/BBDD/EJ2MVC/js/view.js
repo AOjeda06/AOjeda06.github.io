@@ -17,6 +17,7 @@ const View = {
                 <td>${objJson.ciudad}</td>
             </tr>
         `;
+
     },
     
     // Función para actualizar la tabla
