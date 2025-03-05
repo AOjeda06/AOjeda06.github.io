@@ -4,10 +4,6 @@ const View = {
     init: function () {
         $("#dataForm").on("submit", Controller.handleFormSubmit);
         $("#dataTable").on("click", "tr", Controller.handleRowClick);
-        $("#dataTable").on("click", ".eliminar-fila", function () {
-            const id = $(this).data("id");
-            Controller.handleEliminarFila(id);
-        });
     },
     
 
