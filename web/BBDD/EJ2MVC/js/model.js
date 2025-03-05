@@ -26,10 +26,10 @@ const Model = {
     // Funcion para eliminar una fila del array
     eliminarFila: function (id) {
         if (id !== "tableHeader") {
-            filas = filas.filter(f => f.id !== id);
+            filas = filas.filter(f => f.id !== parseInt(id));
             $(`#row-${id}`).remove();
         }
-    },
+    }
 
     // Funcion para serializar un array
     serializar: function (array) {

@@ -29,11 +29,12 @@ const Controller = {
 
     // Función para manejar el clic en una fila de la tabla
     handleRowClick: function () {
-        Model.eliminarFila($(this).data("id"));
-
+        let id = $(this).attr("id").replace("row-", "");
+        Model.eliminarFila(id);
+    
         // Actualizamos las estadísticas
         Controller.actualizarEstadisticas();
-    },
+    }
 
     // Función para actualizar las estadísticas
     actualizarEstadisticas: function () {
