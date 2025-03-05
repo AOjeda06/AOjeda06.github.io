@@ -2,23 +2,28 @@
 const View = {
     // Inicialización de la vista
     init: function () {
-        // Asignamos los manejadores de eventos (enviar formulario y clicar en una fila)
         $("#dataForm").on("submit", Controller.handleFormSubmit);
         $("#dataTable").on("click", "tr", Controller.handleRowClick);
+        $("#dataTable").on("click", ".eliminar-fila", function () {
+            const id = $(this).data("id");
+            Controller.handleEliminarFila(id);
+        });
     },
+    
 
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <tr data-id="${objJson.id}">
+            <tr data-id="${objJson.id}" id="row-${objJson.id}">
                 <td>${objJson.nombre}</td>
                 <td>${objJson.apellidos}</td>
                 <td>${objJson.edad}</td>
                 <td>${objJson.ciudad}</td>
+                <td><button class="eliminar-fila" data-id="${objJson.id}">Eliminar</button></td>
             </tr>
         `;
     },
-
+    
     // Función para actualizar la tabla
     actualizarTabla: function (filas) {
         // Borra la tabla entera y la reimprime
