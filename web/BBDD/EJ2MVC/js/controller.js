@@ -18,11 +18,10 @@ const Controller = {
         }
 
         // Generamos el tr y lo guardamos en el modelo
-        let fila = View.generaTr(objJson);
-        Model.guardarFila(fila);
+        Model.guardarFila(objJson);
 
         // Imprimimos todas las filas
-        View.actualizarTabla(Model.filas);
+        View.actualizarTabla(Model.obtenerFilas());
 
         // Actualizamos las estadísticas
         View.actualizarEstadisticas();
