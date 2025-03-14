@@ -31,4 +31,13 @@ const Model = {
         tareas = tareas.filter(t => t.id !== parseInt(id));
     },
 
+    // Función para cambiar el estado de una tarea
+    cambiarEstado: function (id) {
+        tareas.forEach(t => {
+            if (t.id === parseInt(id)) {
+                t.estado = !t.estado;
+            }
+        });
+    }
+
 }

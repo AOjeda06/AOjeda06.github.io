@@ -34,4 +34,14 @@ const Controller = {
         // Actualizamos las estadísticas
         View.actualizarTabla();
     },
+
+    // Función para manejar el clic en el botón de cambiar estado
+    handleStateClick: function () {
+        // Cambia el estado de la fila y se lo pasa a la función cambiarEstado
+        let id = $(this).attr("id");
+        Model.cambiarEstado(id);
+
+        // Actualizamos las estadísticas
+        View.actualizarTabla
+    }
 }

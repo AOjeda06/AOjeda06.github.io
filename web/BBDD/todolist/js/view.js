@@ -4,6 +4,7 @@ const View = {
     init: function () {
         $("#todo-form").on("submit", Controller.handleFormSubmit);
         $("#deleteButton").on("click", Controller.handleDeleteButtonClick);
+        $("#dataTable").on("click", "#cambiarEstado", Controller.handleStateClick);
     },
 
     // Función para generar una fila de la tabla
@@ -12,7 +13,7 @@ const View = {
             <tr id="${objJson.id}">
             <td>${objJson.tarea}</td>
             <td>${objJson.fecha}</td>
-            <td>${objJson.estado}</td>
+            <td id="cambiarEstado">${objJson.estado}</td>
             <td><button id="deleteButton">Delete</button></td>
             </tr>
         `;
