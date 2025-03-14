@@ -27,21 +27,21 @@ const Controller = {
 
     // Función para manejar el clic en el botón de eliminar
     handleDeleteButtonClick: function () {
-        // Elimina del id de la fila y se lo pasa a la función eliminarFila
-        let id = $(this).attr("id");
+        // Elimina 'row-' del id de la fila y se lo pasa a la función eliminarTarea
+        let id = $(this).closest("tr").attr("id").replace("row-", "");
         Model.eliminarTarea(id);
 
-        // Actualizamos las estadísticas
-        View.actualizarTabla();
+        // Actualizamos la tabla
+        View.actualizarTabla(Model.obtenerTareas());
     },
 
     // Función para manejar el clic en el botón de cambiar estado
     handleStateClick: function () {
         // Cambia el estado de la fila y se lo pasa a la función cambiarEstado
-        let id = $(this).attr("id");
+        let id = $(this).closest("tr").attr("id").replace("row-", "");
         Model.cambiarEstado(id);
 
-        // Actualizamos las estadísticas
-        View.actualizarTabla
+        // Actualizamos la tabla
+        View.actualizarTabla(Model.obtenerTareas());
     }
-}
+};

@@ -3,17 +3,18 @@ const View = {
     // Inicialización de la vista
     init: function () {
         $("#todo-form").on("submit", Controller.handleFormSubmit);
-        $("#deleteButton").on("click", Controller.handleDeleteButtonClick);
-        $("#dataTable").on("click", "#cambiarEstado", Controller.handleStateClick);
+        $("#dataTable").on("click", ".deleteButton", Controller.handleDeleteButtonClick);
+        $("#dataTable").on("click", ".cambiarEstado", Controller.handleStateClick);
     },
 
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <td>${objJson.tarea}</td>
-            <td>${objJson.fecha}</td>
-            <td id="cambiarEstado">${objJson.estado}</td>
-            <td><button id="deleteButton">Delete</button></td>
+            <tr id="row-${objJson.id}">
+                <td>${objJson.tarea}</td>
+                <td>${objJson.fecha}</td>
+                <td class="cambiarEstado">${objJson.estado ? "Completada" : "Pendiente"}</td>
+                <td><button class="deleteButton">Eliminar</button></td>
             </tr>
         `;
     },
@@ -25,7 +26,5 @@ const View = {
         tareas.forEach(tarea => {
             $("#dataTable tbody").append(this.generaTr(tarea));
         });
-    },
-
-
-}
+    }
+};
