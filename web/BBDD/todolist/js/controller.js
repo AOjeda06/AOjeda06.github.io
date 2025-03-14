@@ -38,6 +38,7 @@ const Controller = {
     // Función para manejar el clic en el botón de cambiar estado
     handleStateClick: function () {
         // Cambia el estado de la fila y se lo pasa a la función cambiarEstado
+        // Lo hace cogiendo el id de la fila más cercana (la fila padre)
         let id = $(this).closest("tr").attr("id").replace("row-", "");
         Model.cambiarEstado(id);
 
