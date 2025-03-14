@@ -11,6 +11,8 @@ const View = {
         return `
             <tr id="${objJson.id}">
             <td>${objJson.tarea}</td>
+            <td>${objJson.fecha}</td>
+            <td>${objJson.estado}</td>
             <td><button id="deleteButton">Delete</button></td>
             </tr>
         `;
