@@ -10,7 +10,6 @@ const View = {
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <tr id="${objJson.id}">
             <td>${objJson.tarea}</td>
             <td>${objJson.fecha}</td>
             <td id="cambiarEstado">${objJson.estado}</td>
