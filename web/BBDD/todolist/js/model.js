@@ -15,7 +15,9 @@ const Model = {
     generarObj: function () {
         return {
             id: idCounter++,
-            tarea: $("#tarea").val()
+            tarea: $("#todo-input").val(),
+            fecha: $("#todo-date").val(),
+            estado: $("#todo-state").val()
         };
     },
 
