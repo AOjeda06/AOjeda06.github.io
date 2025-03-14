@@ -17,7 +17,7 @@ const Model = {
             id: idCounter++,
             tarea: $("#todo-input").val(),
             fecha: $("#todo-date").val(),
-            estado: $("#todo-state").val()
+            estado: false
         };
     },
 
