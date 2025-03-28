@@ -9,9 +9,10 @@ const View = {
 
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
+        console.log(`Tarea: ${objJson.getTarea()}, Estado: ${objJson.getEstado()}`); // Depuración
         return `
             <tr id="row-${objJson.getId()}">
-                <td>${objJson.getTarea()}</td>
+                <td class="${objJson.getEstado() ? "completed-task" : ""}">${objJson.getTarea()}</td>
                 <td>${objJson.getFecha()}</td>
                 <td class="cambiarEstado">${objJson.getEstado() ? "Completada" : "Pendiente"}</td>
                 <td><button class="deleteButton">Eliminar</button></td>
