@@ -13,13 +13,14 @@ const Model = {
 
     // Generar un nuevo objeto Tarea
     generarObj: function () {
-        const tareaInputElement = document.querySelector("#todo-input"); // Cambiado de "#tarea" a "#todo-input"
-        if (!tareaInputElement) {
-            throw new Error("El elemento con id 'todo-input' no existe en el DOM. Asegúrate de que el DOM esté completamente cargado y que el elemento exista.");
+        const tareaInput = document.querySelector("#todo-input").value.trim();
+        const fechaInput = document.querySelector("#todo-date").value;
+
+        if (!tareaInput || !fechaInput) {
+            throw new Error("Los campos de tarea y fecha son obligatorios.");
         }
-        const tareaInput = tareaInputElement.value;
-        const fecha = new Date().toISOString();
-        return new Tarea(++idCounter, tareaInput, fecha);
+
+        return new Tarea(++idCounter, tareaInput, fechaInput);
     },
 
     // Función para guardar una tarea en el array

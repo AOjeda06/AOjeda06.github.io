@@ -11,7 +11,7 @@ const View = {
     generaTr: function (objJson) {
         console.log(`Tarea: ${objJson.getTarea()}, Estado: ${objJson.getEstado()}`); // Depuración
         return `
-            <tr id="row-${objJson.getId()}">
+            <tr data-id="${objJson.getId()}">
                 <td class="${objJson.getEstado() ? "completed-task" : ""}">${objJson.getTarea()}</td>
                 <td>${objJson.getFecha()}</td>
                 <td class="cambiarEstado">${objJson.getEstado() ? "Completada" : "Pendiente"}</td>

@@ -9,26 +9,26 @@ const Controller = {
     handleFormSubmit: function (event) {
         event.preventDefault();
 
-        // Creamos el objeto usando la clase Tarea
-        let objJson = Model.generarObj();
+        try {
+            let objJson = Model.generarObj();
 
-        // Comprobamos que el campo no esté vacío
-        if (!objJson.getTarea()) {
-            alert("La tarea no puede estar vacía.");
-            return;
+            // Validación de entrada
+            if (!objJson.getTarea().trim()) {
+                alert("La tarea no puede estar vacía.");
+                return;
+            }
+
+            Model.guardarTarea(objJson);
+            View.actualizarTabla(Model.obtenerTareas());
+        } catch (error) {
+            console.error("Error al procesar el formulario:", error);
+            alert("Ocurrió un error al agregar la tarea. Por favor, inténtalo de nuevo.");
         }
-
-        // Generamos el objeto en el array del modelo
-        Model.guardarTarea(objJson);
-
-        // Imprimimos todas las filas
-        View.actualizarTabla(Model.obtenerTareas());
     },
 
     // Función para manejar el clic en el botón de eliminar
     handleDeleteButtonClick: function () {
-        // Elimina 'row-' del id de la fila y se lo pasa a la función eliminarTarea
-        let id = $(this).closest("tr").attr("id").replace("row-", "");
+        let id = $(this).closest("tr").data("id");
         Model.eliminarTarea(id);
 
         // Actualizamos la tabla
@@ -37,8 +37,7 @@ const Controller = {
 
     // Función para manejar el clic en el botón de cambiar estado
     handleStateClick: function () {
-        // Cambia el estado de la fila y se lo pasa a la función cambiarEstado
-        let id = $(this).closest("tr").attr("id").replace("row-", "");
+        let id = $(this).closest("tr").data("id");
         Model.cambiarEstado(id);
 
         // Actualizamos la tabla
