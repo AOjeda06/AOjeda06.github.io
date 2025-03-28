@@ -18,7 +18,10 @@ const Controller = {
                 return;
             }
 
+            // Guardar la tarea
             Model.guardarTarea(objJson);
+
+            // Actualizamos la tabla
             View.actualizarTabla(Model.obtenerTareas());
         } catch (error) {
             console.error("Error al procesar el formulario:", error);
