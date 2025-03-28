@@ -11,14 +11,11 @@ const Model = {
         return tareas;
     },
 
-    // Función para generar un objeto con los datos del formulario
+    // Generar un nuevo objeto Tarea
     generarObj: function () {
-        return {
-            id: idCounter++,
-            tarea: $("#todo-input").val(),
-            fecha: $("#todo-date").val(),
-            estado: false
-        };
+        const tareaInput = document.querySelector("#tarea").value;
+        const fecha = new Date().toISOString();
+        return new Tarea(++idCounter, tareaInput, fecha);
     },
 
     // Función para guardar una tarea en el array
@@ -28,14 +25,14 @@ const Model = {
 
     // Función para eliminar una tarea del array
     eliminarTarea: function (id) {
-        tareas = tareas.filter(t => t.id !== parseInt(id));
+        tareas = tareas.filter(t => t.getId() !== parseInt(id));
     },
 
     // Función para cambiar el estado de una tarea
     cambiarEstado: function (id) {
         tareas.forEach(t => {
-            if (t.id === parseInt(id)) {
-                t.estado = !t.estado;
+            if (t.getId() === parseInt(id)) {
+                t.setEstado(!t.getEstado());
             }
         });
     }

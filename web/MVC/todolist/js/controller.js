@@ -9,11 +9,11 @@ const Controller = {
     handleFormSubmit: function (event) {
         event.preventDefault();
 
-        // Creamos el objeto
+        // Creamos el objeto usando la clase Tarea
         let objJson = Model.generarObj();
 
         // Comprobamos que el campo no esté vacío
-        if (!objJson.tarea) {
+        if (!objJson.getTarea()) {
             alert("La tarea no puede estar vacía.");
             return;
         }
@@ -38,7 +38,6 @@ const Controller = {
     // Función para manejar el clic en el botón de cambiar estado
     handleStateClick: function () {
         // Cambia el estado de la fila y se lo pasa a la función cambiarEstado
-        // Lo hace cogiendo el id de la fila más cercana (la fila padre)
         let id = $(this).closest("tr").attr("id").replace("row-", "");
         Model.cambiarEstado(id);
 
