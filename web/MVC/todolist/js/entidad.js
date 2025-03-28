@@ -6,12 +6,12 @@ class Tarea {
     #visible;
 
     // Constructor
-    constructor(id, tarea, fecha, estado = false, visible = true) {
+    constructor(id, tarea, fecha) {
         this.#id = id;
         this.#tarea = tarea;
         this.#fecha = fecha;
-        this.#estado = estado;
-        this.#visible = visible;
+        this.#estado = false;
+        this.#visible = true;
     }
 
     // Métodos para acceder a los atributos privados
@@ -24,7 +24,7 @@ class Tarea {
     }
 
     getFecha() {
-        return this.#fecha;
+        return new Date(this.#fecha).toLocaleDateString(); // Formato más legible
     }
 
     getEstado() {
