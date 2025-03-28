@@ -10,10 +10,10 @@ const View = {
     // Función para generar una fila de la tabla
     generaTr: function (objJson) {
         return `
-            <tr id="row-${objJson.id}">
-                <td>${objJson.tarea}</td>
-                <td>${objJson.fecha}</td>
-                <td class="cambiarEstado">${objJson.estado ? "Completada" : "Pendiente"}</td>
+            <tr id="row-${objJson.getId()}">
+                <td>${objJson.getTarea()}</td>
+                <td>${objJson.getFecha()}</td>
+                <td class="cambiarEstado">${objJson.getEstado() ? "Completada" : "Pendiente"}</td>
                 <td><button class="deleteButton">Eliminar</button></td>
             </tr>
         `;
@@ -23,8 +23,10 @@ const View = {
     actualizarTabla: function (tareas = []) {
         // Borra la tabla entera y la reimprime
         $("#dataTable tbody").empty();
-        tareas.forEach(tarea => {
-            $("#dataTable tbody").append(this.generaTr(tarea));
-        });
+        tareas
+            .filter(tarea => tarea.getVisible()) // Filtrar solo las tareas visibles
+            .forEach(tarea => {
+                $("#dataTable tbody").append(this.generaTr(tarea));
+            });
     }
 };

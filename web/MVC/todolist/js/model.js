@@ -25,7 +25,11 @@ const Model = {
 
     // Función para eliminar una tarea del array
     eliminarTarea: function (id) {
-        tareas = tareas.filter(t => t.getId() !== parseInt(id));
+        tareas.forEach(t => {
+            if (t.getId() === parseInt(id)) {
+                t.setVisible(false);
+            }
+        });
     },
 
     // Función para cambiar el estado de una tarea
