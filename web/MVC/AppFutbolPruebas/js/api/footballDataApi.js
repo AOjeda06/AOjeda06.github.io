@@ -73,6 +73,22 @@ const FootballDataApi = {
             console.error(`Error al obtener jugadores del equipo ID ${teamId}:`, error);
             throw error;
         }
+    },
+
+    /**
+     * Procesa solicitudes en lotes para limitar la concurrencia.
+     * @param {Array<Function>} tasks - Array de funciones que devuelven promesas.
+     * @returns {Promise<Array>} Resultados de las tareas.
+     */
+    processInBatches: async function (tasks) {
+        const results = [];
+        while (tasks.length > 0) {
+            const batch = tasks.splice(0, MAX_CONCURRENT_REQUESTS);
+            const batchResults = await Promise.allSettled(batch.map(task => task()));
+            results.push(...batchResults);
+            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY)); // Delay between batches
+        }
+        return results;
     }
 };
 
