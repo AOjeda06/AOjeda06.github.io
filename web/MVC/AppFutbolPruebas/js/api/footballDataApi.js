@@ -1,7 +1,7 @@
 const BASE_URL = 'https://www.thesportsdb.com/api/v1/json/3/';
 const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
-const RETRY_DELAY = 5000; // 5 seconds
-const MAX_CONCURRENT_REQUESTS = 5; // Limit concurrent requests
+const RETRY_DELAY = 10000; // 10 seconds
+const MAX_CONCURRENT_REQUESTS = 3; // Limit concurrent requests
 
 const FootballDataApi = {
     /**
@@ -86,6 +86,7 @@ const FootballDataApi = {
             const batch = tasks.splice(0, MAX_CONCURRENT_REQUESTS);
             const batchResults = await Promise.allSettled(batch.map(task => task()));
             results.push(...batchResults);
+            console.log(`Esperando ${RETRY_DELAY / 1000} segundos antes de procesar el siguiente lote...`);
             await new Promise(resolve => setTimeout(resolve, RETRY_DELAY)); // Delay between batches
         }
         return results;
