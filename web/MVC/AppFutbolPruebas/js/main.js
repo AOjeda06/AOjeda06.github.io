@@ -1,48 +1,19 @@
 import FootballDataApi from './api/footballDataApi.js';
 import Model from './model/model.js';
 
-(async function () {
-    console.log("Iniciando la obtención de datos...");
-
+(async () => {
     try {
-        // Obtener la lista de ligas
-        const ligas = await FootballDataApi.obtenerLigas();
-        const ligasSeleccionadas = ligas.slice(0, 5); // Limitar a 5 ligas para pruebas
+        console.log("Iniciando la obtención de datos...");
+        const datos = await FootballDataApi.obtenerLigasYJugadoresDeChampions();
 
-        const datosLigas = await Promise.all(
-            ligasSeleccionadas.map(async liga => {
-                try {
-                    // Obtener equipos de la liga
-                    const equipos = await FootballDataApi.obtenerEquipos(liga.strLeague);
+        // Procesar los jugadores de los clubes
+        const jugadoresPorLiga = datos.clubes.map(async club => {
+            console.log(`Procesando jugadores del club: ${club.strTeam}`);
+            return await FootballDataApi.obtenerJugadoresDeEquipos([club.idTeam]);
+        });
 
-                    // Obtener jugadores de cada equipo
-                    const jugadoresPorEquipo = await Promise.all(
-                        equipos.map(async equipo => {
-                            const jugadores = await FootballDataApi.obtenerJugadores(equipo.idTeam);
-                            return { equipo, jugadores };
-                        })
-                    );
-
-                    return { liga, equipos: jugadoresPorEquipo };
-                } catch (error) {
-                    console.error(`Error al procesar la liga ${liga.strLeague}:`, error);
-                    throw error;
-                }
-            })
-        );
-
-        // Procesar los datos recibidos
-        console.log("Datos de ligas procesados:", datosLigas);
-
-        // Almacenar los datos en el modelo
-        Model.cargarDatosIniciales(datosLigas);
-        console.log("Datos almacenados en el modelo.");
-
-        // Guardar los datos en el localStorage
-        localStorage.setItem('ligas', JSON.stringify(datosLigas));
-        console.log("Datos guardados en el localStorage.");
-
-        console.log("Obtención de datos completada. Revisa los datos en la consola.");
+        const jugadores = await Promise.all(jugadoresPorLiga);
+        console.log("Jugadores procesados:", jugadores);
     } catch (error) {
         console.error("Error al obtener los datos:", error);
     }
