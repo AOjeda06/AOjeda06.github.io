@@ -174,25 +174,41 @@ const FootballDataApi = {
 
     /**
      * Obtiene las ligas de los equipos que participan en la Champions League.
-     * Luego obtiene los clubes y jugadores de esas ligas.
+     * Solo procesa las 4 grandes ligas europeas. Los equipos de otras ligas
+     * se almacenan como participantes de la Champions League.
      * @returns {Promise<Object>} Datos agrupados de ligas, clubes y jugadores.
      */
     obtenerLigasYJugadoresDeChampions: async function () {
         console.log("Obteniendo ligas y jugadores de los equipos de la Champions League...");
+
+        // Definir las 4 grandes ligas europeas
+        const grandesLigas = [
+            "English Premier League",
+            "Spanish La Liga",
+            "Italian Serie A",
+            "German Bundesliga"
+        ];
 
         try {
             // Obtener los equipos de la Champions League
             const championsData = await this.obtenerDatosChampions();
             const equipos = championsData.equipos;
 
-            // Extraer las ligas únicas de los equipos
-            const leagueNames = [...new Set(equipos.map(equipo => equipo.strLeague))];
-            console.log("Ligas únicas de los equipos de la Champions League:", leagueNames);
+            // Separar equipos de las 4 grandes ligas y el resto
+            const equiposGrandesLigas = equipos.filter(equipo => grandesLigas.includes(equipo.strLeague));
+            const equiposOtrasLigas = equipos.filter(equipo => !grandesLigas.includes(equipo.strLeague));
+
+            console.log("Equipos de las 4 grandes ligas:", equiposGrandesLigas);
+            console.log("Equipos de otras ligas:", equiposOtrasLigas);
+
+            // Extraer las ligas únicas de los equipos de las 4 grandes ligas
+            const leagueNames = [...new Set(equiposGrandesLigas.map(equipo => equipo.strLeague))];
+            console.log("Ligas únicas de las 4 grandes ligas:", leagueNames);
 
             // Crear un conjunto para rastrear las ligas ya procesadas
             const ligasProcesadas = new Set();
 
-            // Obtener los clubes de cada liga (evitando duplicados)
+            // Obtener los clubes de cada liga (solo de las 4 grandes ligas)
             const clubesPorLiga = await this.processInBatches(
                 leagueNames
                     .filter(leagueName => {
@@ -213,7 +229,7 @@ const FootballDataApi = {
                 .filter(result => result.status === 'fulfilled')
                 .flatMap(result => result.value);
 
-            console.log("Clubes obtenidos de todas las ligas:", clubes);
+            console.log("Clubes obtenidos de las 4 grandes ligas:", clubes);
 
             // Obtener los jugadores de cada club
             const jugadoresPorClub = await this.processInBatches(
@@ -227,10 +243,15 @@ const FootballDataApi = {
                 .filter(result => result.status === 'fulfilled')
                 .flatMap(result => result.value);
 
-            console.log("Jugadores obtenidos de todos los clubes:", jugadores);
+            console.log("Jugadores obtenidos de los clubes de las 4 grandes ligas:", jugadores);
 
             // Retornar los datos agrupados
-            return { ligas: Array.from(ligasProcesadas), clubes, jugadores };
+            return {
+                ligas: Array.from(ligasProcesadas),
+                clubes,
+                jugadores,
+                equiposOtrasLigas // Equipos de otras ligas como participantes de la Champions
+            };
         } catch (error) {
             console.error("Error al obtener ligas y jugadores de los equipos de la Champions League:", error);
             throw error;
