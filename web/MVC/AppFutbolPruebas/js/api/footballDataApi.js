@@ -29,42 +29,16 @@ const FootballDataApi = {
     },
 
     /**
-     * Procesa solicitudes en lotes para limitar la concurrencia.
-     * @param {Array<Function>} tasks - Array de funciones que devuelven promesas.
-     * @returns {Promise<Array>} Resultados de las tareas.
+     * Obtiene los equipos de la Champions League.
+     * @returns {Promise<Array>} Lista de equipos de la Champions League.
      */
-    processInBatches: async function (tasks) {
-        const results = [];
-        while (tasks.length > 0) {
-            const batch = tasks.splice(0, MAX_CONCURRENT_REQUESTS);
-            const batchResults = await Promise.allSettled(batch.map(task => task()));
-            results.push(...batchResults);
-            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY)); // Delay between batches
-        }
-        return results;
-    },
-
-    /**
-     * Obtiene la lista de ligas.
-     * @returns {Promise<Array>} Lista de ligas.
-     */
-    obtenerLigas: async function () {
-        console.log("Solicitando la lista de ligas...");
-        const localStorageKey = 'ligas';
-        const cachedData = localStorage.getItem(localStorageKey);
-
-        if (cachedData) {
-            console.log("Ligas obtenidas del localStorage.");
-            return JSON.parse(cachedData);
-        }
-
+    obtenerEquiposChampions: async function () {
+        console.log("Obteniendo equipos de la Champions League...");
         try {
-            const data = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}all_leagues.php`);
-            console.log("Ligas recibidas:", data.leagues);
-            localStorage.setItem(localStorageKey, JSON.stringify(data.leagues || []));
-            return data.leagues || [];
+            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}search_all_teams.php?l=UEFA%20Champions%20League`);
+            return response.teams || [];
         } catch (error) {
-            console.error("Error al obtener la lista de ligas:", error);
+            console.error("Error al obtener equipos de la Champions League:", error);
             throw error;
         }
     },
@@ -72,188 +46,31 @@ const FootballDataApi = {
     /**
      * Obtiene los equipos de una liga específica.
      * @param {string} leagueName - Nombre de la liga.
-     * @returns {Promise<Array>} Lista de equipos.
+     * @returns {Promise<Array>} Lista de equipos de la liga.
      */
-    obtenerEquipos: async function (leagueName) {
-        console.log(`Solicitando equipos para la liga: ${leagueName}`);
-        const localStorageKey = `equipos_${leagueName}`;
-        const cachedData = localStorage.getItem(localStorageKey);
-
-        if (cachedData) {
-            console.log(`Equipos para la liga ${leagueName} obtenidos del localStorage.`);
-            return JSON.parse(cachedData);
-        }
-
+    obtenerEquiposLiga: async function (leagueName) {
+        console.log(`Obteniendo equipos de la liga: ${leagueName}`);
         try {
-            const data = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}search_all_teams.php?l=${encodeURIComponent(leagueName)}`);
-            console.log("Equipos recibidos:", data.teams);
-            localStorage.setItem(localStorageKey, JSON.stringify(data.teams || []));
-            return data.teams || [];
+            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}search_all_teams.php?l=${encodeURIComponent(leagueName)}`);
+            return response.teams || [];
         } catch (error) {
-            console.error(`Error al obtener equipos para la liga ${leagueName}:`, error);
+            console.error(`Error al obtener equipos de la liga ${leagueName}:`, error);
             throw error;
         }
     },
 
     /**
-     * Obtiene los jugadores de múltiples equipos.
-     * @param {Array<number>} teamIds - IDs de los equipos.
-     * @returns {Promise<Array>} Lista de jugadores.
+     * Obtiene los jugadores de un equipo específico.
+     * @param {number} teamId - ID del equipo.
+     * @returns {Promise<Array>} Lista de jugadores del equipo.
      */
-    obtenerJugadoresDeEquipos: async function (teamIds) {
-        console.log("Solicitando jugadores para múltiples equipos...");
-        const results = [];
-
-        for (const teamId of teamIds) {
-            const localStorageKey = `jugadores_${teamId}`;
-            const cachedData = localStorage.getItem(localStorageKey);
-
-            if (cachedData) {
-                console.log(`Jugadores para el equipo ID ${teamId} obtenidos del localStorage.`);
-                results.push(JSON.parse(cachedData));
-                continue;
-            }
-
-            try {
-                console.log(`Solicitando jugadores para el equipo ID: ${teamId}`);
-                const data = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}lookup_all_players.php?id=${teamId}`);
-                localStorage.setItem(localStorageKey, JSON.stringify(data.player || []));
-                results.push(data.player || []);
-            } catch (error) {
-                console.error(`Error al obtener jugadores para el equipo ID ${teamId}:`, error);
-            }
-        }
-
-        return results;
-    },
-
-    /**
-     * Obtiene los equipos de la Champions League y las ligas de esos equipos.
-     * @returns {Promise<Object>} Datos agrupados de equipos y ligas.
-     */
-    obtenerDatosChampions: async function () {
-        console.log("Obteniendo datos de la Champions League...");
-
-        // Verificar si los datos ya están en localStorage
-        const localStorageKey = 'champions_data';
-        const cachedData = localStorage.getItem(localStorageKey);
-
-        if (cachedData) {
-            console.log("Datos de la Champions League obtenidos del localStorage.");
-            return JSON.parse(cachedData);
-        }
-
+    obtenerJugadoresEquipo: async function (teamId) {
+        console.log(`Obteniendo jugadores del equipo ID: ${teamId}`);
         try {
-            // Obtener los equipos de la Champions League usando el nombre exacto de la liga
-            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}search_all_teams.php?l=UEFA%20Champions%20League`);
-            const equipos = response.teams || [];
-            console.log("Equipos de la Champions League:", equipos);
-
-            // Obtener las ligas de los equipos participantes
-            const leagueNames = [...new Set(equipos.map(equipo => equipo.strLeague))]; // Evitar duplicados
-            console.log("Ligas de los equipos participantes:", leagueNames);
-
-            const ligasDeEquipos = await this.processInBatches(
-                leagueNames.map(leagueName => async () => this.obtenerEquipos(leagueName))
-            );
-
-            const ligasProcesadas = ligasDeEquipos
-                .filter(result => result.status === 'fulfilled')
-                .map(result => result.value);
-
-            // Guardar los datos agrupados en localStorage
-            const championsData = { equipos, ligasProcesadas };
-            localStorage.setItem(localStorageKey, JSON.stringify(championsData));
-
-            return championsData;
+            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}lookup_all_players.php?id=${teamId}`);
+            return response.player || [];
         } catch (error) {
-            console.error("Error al obtener datos de la Champions League:", error);
-            throw error;
-        }
-    },
-
-    /**
-     * Obtiene las ligas de los equipos que participan en la Champions League.
-     * Solo procesa las 4 grandes ligas europeas. Los equipos de otras ligas
-     * se almacenan como participantes de la Champions League.
-     * @returns {Promise<Object>} Datos agrupados de ligas, clubes y jugadores.
-     */
-    obtenerLigasYJugadoresDeChampions: async function () {
-        console.log("Obteniendo ligas y jugadores de los equipos de la Champions League...");
-
-        // Definir las 4 grandes ligas europeas
-        const grandesLigas = [
-            "English Premier League",
-            "Spanish La Liga",
-            "Italian Serie A",
-            "German Bundesliga"
-        ];
-
-        try {
-            // Obtener los equipos de la Champions League
-            const championsData = await this.obtenerDatosChampions();
-            const equipos = championsData.equipos;
-
-            // Separar equipos de las 4 grandes ligas y el resto
-            const equiposGrandesLigas = equipos.filter(equipo => grandesLigas.includes(equipo.strLeague));
-            const equiposOtrasLigas = equipos.filter(equipo => !grandesLigas.includes(equipo.strLeague));
-
-            console.log("Equipos de las 4 grandes ligas:", equiposGrandesLigas);
-            console.log("Equipos de otras ligas:", equiposOtrasLigas);
-
-            // Extraer las ligas únicas de los equipos de las 4 grandes ligas
-            const leagueNames = [...new Set(equiposGrandesLigas.map(equipo => equipo.strLeague))];
-            console.log("Ligas únicas de las 4 grandes ligas:", leagueNames);
-
-            // Crear un conjunto para rastrear las ligas ya procesadas
-            const ligasProcesadas = new Set();
-
-            // Obtener los clubes de cada liga (solo de las 4 grandes ligas)
-            const clubesPorLiga = await this.processInBatches(
-                leagueNames
-                    .filter(leagueName => {
-                        if (ligasProcesadas.has(leagueName)) {
-                            console.log(`Liga ya procesada: ${leagueName}`);
-                            return false;
-                        }
-                        ligasProcesadas.add(leagueName);
-                        return true;
-                    })
-                    .map(leagueName => async () => {
-                        console.log(`Obteniendo clubes de la liga: ${leagueName}`);
-                        return this.obtenerEquipos(leagueName);
-                    })
-            );
-
-            const clubes = clubesPorLiga
-                .filter(result => result.status === 'fulfilled')
-                .flatMap(result => result.value);
-
-            console.log("Clubes obtenidos de las 4 grandes ligas:", clubes);
-
-            // Obtener los jugadores de cada club
-            const jugadoresPorClub = await this.processInBatches(
-                clubes.map(club => async () => {
-                    console.log(`Obteniendo jugadores del club: ${club.strTeam}`);
-                    return this.obtenerJugadoresDeEquipos([club.idTeam]);
-                })
-            );
-
-            const jugadores = jugadoresPorClub
-                .filter(result => result.status === 'fulfilled')
-                .flatMap(result => result.value);
-
-            console.log("Jugadores obtenidos de los clubes de las 4 grandes ligas:", jugadores);
-
-            // Retornar los datos agrupados
-            return {
-                ligas: Array.from(ligasProcesadas),
-                clubes,
-                jugadores,
-                equiposOtrasLigas // Equipos de otras ligas como participantes de la Champions
-            };
-        } catch (error) {
-            console.error("Error al obtener ligas y jugadores de los equipos de la Champions League:", error);
+            console.error(`Error al obtener jugadores del equipo ID ${teamId}:`, error);
             throw error;
         }
     }
