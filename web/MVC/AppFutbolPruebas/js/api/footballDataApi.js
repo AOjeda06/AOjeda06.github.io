@@ -144,8 +144,8 @@ const FootballDataApi = {
         }
 
         try {
-            // Obtener los equipos de la Champions League
-            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}lookup_all_teams.php?id=4480`);
+            // Obtener los equipos de la Champions League usando el nombre de la liga
+            const response = await this.fetchWithRetry(`${PROXY_URL}${BASE_URL}search_all_teams.php?l=UEFA%20Champions%20League`);
             const equipos = response.teams || [];
             console.log("Equipos de la Champions League:", equipos);
 
