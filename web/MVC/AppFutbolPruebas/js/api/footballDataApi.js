@@ -170,6 +170,71 @@ const FootballDataApi = {
             console.error("Error al obtener datos de la Champions League:", error);
             throw error;
         }
+    },
+
+    /**
+     * Obtiene las ligas de los equipos que participan en la Champions League.
+     * Luego obtiene los clubes y jugadores de esas ligas.
+     * @returns {Promise<Object>} Datos agrupados de ligas, clubes y jugadores.
+     */
+    obtenerLigasYJugadoresDeChampions: async function () {
+        console.log("Obteniendo ligas y jugadores de los equipos de la Champions League...");
+
+        try {
+            // Obtener los equipos de la Champions League
+            const championsData = await this.obtenerDatosChampions();
+            const equipos = championsData.equipos;
+
+            // Extraer las ligas únicas de los equipos
+            const leagueNames = [...new Set(equipos.map(equipo => equipo.strLeague))];
+            console.log("Ligas únicas de los equipos de la Champions League:", leagueNames);
+
+            // Crear un conjunto para rastrear las ligas ya procesadas
+            const ligasProcesadas = new Set();
+
+            // Obtener los clubes de cada liga (evitando duplicados)
+            const clubesPorLiga = await this.processInBatches(
+                leagueNames
+                    .filter(leagueName => {
+                        if (ligasProcesadas.has(leagueName)) {
+                            console.log(`Liga ya procesada: ${leagueName}`);
+                            return false;
+                        }
+                        ligasProcesadas.add(leagueName);
+                        return true;
+                    })
+                    .map(leagueName => async () => {
+                        console.log(`Obteniendo clubes de la liga: ${leagueName}`);
+                        return this.obtenerEquipos(leagueName);
+                    })
+            );
+
+            const clubes = clubesPorLiga
+                .filter(result => result.status === 'fulfilled')
+                .flatMap(result => result.value);
+
+            console.log("Clubes obtenidos de todas las ligas:", clubes);
+
+            // Obtener los jugadores de cada club
+            const jugadoresPorClub = await this.processInBatches(
+                clubes.map(club => async () => {
+                    console.log(`Obteniendo jugadores del club: ${club.strTeam}`);
+                    return this.obtenerJugadoresDeEquipos([club.idTeam]);
+                })
+            );
+
+            const jugadores = jugadoresPorClub
+                .filter(result => result.status === 'fulfilled')
+                .flatMap(result => result.value);
+
+            console.log("Jugadores obtenidos de todos los clubes:", jugadores);
+
+            // Retornar los datos agrupados
+            return { ligas: Array.from(ligasProcesadas), clubes, jugadores };
+        } catch (error) {
+            console.error("Error al obtener ligas y jugadores de los equipos de la Champions League:", error);
+            throw error;
+        }
     }
 };
 
